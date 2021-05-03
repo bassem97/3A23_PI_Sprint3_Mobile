@@ -23,7 +23,8 @@ public class UserListForm extends Form {
 
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
-        this.getToolbar().addCommandToLeftBar("Home",icon,evt1 -> new Home().show());
+        this.getToolbar().addCommandToLeftBar("Home",null,evt1 -> new Home().show());
+        this.getToolbar().addCommandToRightBar(null,icon,evt1 -> new LoginForm().show());
 
         new UserService().findAll().forEach(user -> {
             this.add(item(user.getImage(),user.getUsername(),user.getEmail()));
