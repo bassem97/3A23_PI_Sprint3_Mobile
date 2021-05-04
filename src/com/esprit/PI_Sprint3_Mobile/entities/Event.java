@@ -1,8 +1,5 @@
 package com.esprit.PI_Sprint3_Mobile.entities;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.io.File;
 import java.time.LocalDateTime;
 
@@ -13,10 +10,8 @@ public class Event {
     private LocalDateTime date;
     private EventType eventType;
     private Club club;
-    private ImageView imageView;
 
     public Event() {
-        imageView = new ImageView();
     }
 
     public Event(int id, int nb_part_max, String name, String description, String image, LocalDateTime date, EventType eventType, Club club) {
@@ -28,7 +23,6 @@ public class Event {
         this.date = date;
         this.eventType = eventType;
         this.club = club;
-        imageView = new ImageView();
     }
 
     public int getId() {
@@ -95,14 +89,6 @@ public class Event {
         this.club = club;
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
-
     @Override
     public String toString() {
         return "Event{" +
@@ -115,15 +101,4 @@ public class Event {
                 '}';
     }
 
-    public void initializeImageView() {
-        File file = new File("src/assets/" + image);
-        try {
-            Image img = new Image(file.toURI().toString());
-            imageView.setImage(img);
-            imageView.setFitWidth(70);
-            imageView.setFitHeight(70);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }
