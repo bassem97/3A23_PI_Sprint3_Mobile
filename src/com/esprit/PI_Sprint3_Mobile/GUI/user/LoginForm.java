@@ -1,19 +1,28 @@
 package com.esprit.PI_Sprint3_Mobile.GUI.user;
 
 import com.codename1.ui.Button;
-import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
+
+import java.io.IOException;
 
 public class LoginForm extends Form {
     private TextField tfEmail;
     private TextField tfPassword;
     private Button btnLogin;
 
+    public Resources theme;
+
     public LoginForm(){
         super("Login", BoxLayout.y());
+        try {
+            theme = Resources.openLayered("/theme");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         addGUI();
         addAction();
     }
