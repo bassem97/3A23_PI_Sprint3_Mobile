@@ -10,7 +10,11 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
+import com.esprit.PI_Sprint3_Mobile.entities.Theme;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
+import com.esprit.PI_Sprint3_Mobile.services.PostService;
+import com.esprit.PI_Sprint3_Mobile.services.SujetService;
+import com.esprit.PI_Sprint3_Mobile.services.ThemeService;
 
 import java.time.LocalDateTime;
 
@@ -28,7 +32,6 @@ public class MyApplication {
     public void init(Object context) {
         // use two network threads instead of one
         updateNetworkThreadCount(2);
-
         theme = UIManager.initFirstTheme("/theme");
 
         // Enable Toolbar on all Forms by default
@@ -49,13 +52,10 @@ public class MyApplication {
     }
     
     public void start() {
-        Event event = new Event();
-        event.setId(32);
-        event.setName("codename");
-        event.setDescription("CEAJRR");
-        event.setNb_part_max(1);
-        event.setDate(LocalDateTime.now());
-        System.out.println(EventService.getInstance().delete(26));
+        Theme theme = new Theme();
+        theme.setId(32);
+        theme.setLibelle("codename");
+        System.out.println(PostService.getInstance().findAll());
         // System.out.println(EventService.getInstance().findAll());
         if(current != null){
             current.show();
