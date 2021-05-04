@@ -54,7 +54,7 @@ public class MyApplication {
     public void start() {
         Theme theme = new Theme();
         theme.setId(32);
-        theme.setLibelle("codename");
+        theme.setLibelle("codename1");
         System.out.println(PostService.getInstance().findAll());
         // System.out.println(EventService.getInstance().findAll());
         if(current != null){
