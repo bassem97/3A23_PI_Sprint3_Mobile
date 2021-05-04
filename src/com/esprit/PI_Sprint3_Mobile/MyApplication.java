@@ -47,7 +47,6 @@ public class MyApplication {
     }
     
     public void start() {
-        System.out.println(EventService.getInstance().findAll());
         if(current != null){
             current.show();
             return;

@@ -7,6 +7,8 @@ import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -144,14 +146,19 @@ public class EventService {
                 t.setId((int)id);
                 t.setName((obj.get("name").toString()));
                 t.setDescription(obj.get("description").toString());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
+                        .replace("T", " ")
+                        .split("\\+")[0], formatter);
+                t.setDate(dateTime);
 
                 events.add(t);
             }
+            return events;
 
         } catch (IOException ex) {
-
+            System.out.println(ex.getMessage());
+            return null;
         }
-
-        return events;
     }
 }
