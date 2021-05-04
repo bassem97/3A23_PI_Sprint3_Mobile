@@ -11,6 +11,7 @@ import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.User;
+import com.esprit.PI_Sprint3_Mobile.services.EventService;
 import com.esprit.PI_Sprint3_Mobile.services.UserService;
 
 /**
@@ -46,6 +47,7 @@ public class MyApplication {
     }
     
     public void start() {
+        System.out.println(EventService.getInstance().findAll());
         if(current != null){
             current.show();
             return;
