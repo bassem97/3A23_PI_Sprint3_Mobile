@@ -1,23 +1,19 @@
 package com.esprit.PI_Sprint3_Mobile.entities;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import com.codename1.facebook.User;
 
-import java.io.File;
 import java.time.LocalDateTime;
 
 public class Post {
-
     private int id;
     private String text;
     private Sujet sujet;
     private String image;
     private User user;
-    private ImageView imageView;
     private int rating;
     private LocalDateTime dateTime;
 
-    public Post() {imageView = new ImageView();
+    public Post() {
         dateTime = LocalDateTime.now();
     }
 
@@ -26,7 +22,6 @@ public class Post {
         this.text = text;
         this.sujet = sujet;
         this.rating = rating;
-        imageView = new ImageView();
     }
 
     public int getId() {
@@ -73,14 +68,6 @@ public class Post {
         this.user = user;
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
-
     public void setSujet(Sujet sujet) {
         this.sujet = sujet;
     }
@@ -101,21 +88,9 @@ public class Post {
                 ", sujet=" + sujet +
                 ", image='" + image + '\'' +
                 ", user=" + user +
-                ", imageView=" + imageView +
                 ", rating=" + rating +
                 ", dateTime=" + dateTime +
                 '}';
     }
 
-    public void initializeImageView() {
-        File file = new File("src/assets/" + image);
-        try {
-            Image img = new Image(file.toURI().toString());
-            imageView.setImage(img);
-            imageView.setFitWidth(70);
-            imageView.setFitHeight(70);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }
