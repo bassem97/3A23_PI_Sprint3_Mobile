@@ -22,11 +22,16 @@ public class UserShowForm extends Form {
 
     public UserShowForm(String title,User user) {
         super(title,new FlowLayout(Component.CENTER,Component.CENTER));
+        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5);
+        FontImage edit = FontImage.createMaterial(FontImage.MATERIAL_EDIT, "TitleCommand", 5);
+        this.getToolbar().addCommandToLeftBar(null,icon,evt1 -> new UserListForm().show());
+        this.getToolbar().addCommandToRightBar(null,edit,evt1 -> new EditUser(user).show());
+
         this.user = user;
         Nom.setText("Nom : "+user.getNom());
         Prenom.setText("Prenom : "+user.getPrenom());
         email.setText("Email : "+user.getEmail());
-        creationDate.setText("Joined at  : "+user.getCreation_date().toString());
+        creationDate.setText("Joined at  : "+user.getCreation_date().toLocalDate().toString());
         try {
             theme = Resources.openLayered("/theme");
         } catch (IOException e) {
@@ -46,7 +51,6 @@ public class UserShowForm extends Form {
         if(user.getImage() == null || user.getImage().equals(""))
             img = theme.getImage("person.png");
         else if(user.getImage().contains("google")){
-            System.out.println("HNEEEEE");
             String url = user.getImage();
             img = URLImage.createToStorage(placeHolder,user.getUsername(),url);
         }else

@@ -53,7 +53,6 @@ public class UserListForm extends Form {
         if(image == null || image.equals(""))
             img = theme.getImage("person.png");
         else if(image.contains("google")){
-            System.out.println("HNEEEEE");
             String url = image;
             img = URLImage.createToStorage(placeHolder,username,url);
         }else
@@ -71,8 +70,7 @@ public class UserListForm extends Form {
 
         lbUsername.addPointerPressedListener(evt -> {
             UserShowForm userShowForm = new UserShowForm(username,user);
-            FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 3);
-            userShowForm.getToolbar().addCommandToLeftBar("Return to list ",icon,evt1 -> this.show());
+
             userShowForm.show();
         });
         global.setLeadComponent(lbUsername);

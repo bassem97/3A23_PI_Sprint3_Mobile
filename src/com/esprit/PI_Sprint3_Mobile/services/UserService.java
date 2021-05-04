@@ -88,6 +88,14 @@ public class UserService {
         return users;
     }
 
+    public User findByEmail(String email){
+        List<User> users = findAll();
+         return users.stream()
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst()
+                .orElse(null);
+    }
+
 
     public boolean save(User user) {
         String url = Statics.BASE_URL + "api/user/signUp";
