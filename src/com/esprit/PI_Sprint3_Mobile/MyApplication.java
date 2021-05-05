@@ -51,7 +51,7 @@ public class MyApplication {
             return;
         }
 
-//        System.out.println(UserService.getInstance().findAll());
+//        System.out.println(UserService.getInstance().findByEmail("bassem.jadoui@esrit.tn"));
 
         new LoginForm().show();
 //        User user = new User();
