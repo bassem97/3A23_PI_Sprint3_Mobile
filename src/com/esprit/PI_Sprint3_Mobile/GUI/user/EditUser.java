@@ -5,6 +5,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.entities.User;
+import com.esprit.PI_Sprint3_Mobile.services.UserService;
 import javafx.scene.control.DatePicker;
 
 import java.io.IOException;
@@ -53,8 +54,13 @@ public class EditUser extends Form {
         save = FontImage.createMaterial(FontImage.MATERIAL_SAVE, "TitleCommand", 5);
         this.getToolbar().addCommandToLeftBar(null,icon,evt1 -> new UserShowForm(user.getUsername(),user).show());
         this.getToolbar().addCommandToRightBar(null,save,evt1 ->{
-
-                        Dialog.show("Successful", user.getUsername()+" updated !" , "OK", null);
+            user.setNom(nom.getText());
+            user.setPrenom(prenom.getText());
+            System.out.println(user);
+            if(UserService.getInstance().update(user))
+                Dialog.show("Successful", user.getUsername()+" updated !" , "OK", null);
+            else
+                Dialog.show("Failure", user.getUsername()+" cannot updated !" , "OK", null);
 
         } );
         Container ct = new Container(BoxLayout.y());
