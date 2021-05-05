@@ -2,6 +2,7 @@ package com.esprit.PI_Sprint3_Mobile.GUI.user;
 
 import com.codename1.components.ImageViewer;
 import com.codename1.ui.*;
+import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
@@ -37,7 +38,6 @@ public class UserListForm extends Form {
         this.getToolbar().addCommandToRightBar(null,icon,evt1 -> new LoginForm().show());
 
         new UserService().findAll().forEach(user -> {
-            System.out.println(user);
             try {
                 this.add(item(user.getImage(),user.getUsername(),user.getEmail(),user));
             } catch (IOException e) {
@@ -59,18 +59,18 @@ public class UserListForm extends Form {
             img = theme.getImage(username);
 
         ImageViewer imageViewer = new ImageViewer(img);
-        imageViewer.setWidth(30);
-        imageViewer.setHeight(20);
+        imageViewer.setPreferredSize(new Dimension(300,250));
+
 
         Label lbUsername = new Label(username);
         Label lbEmail = new Label(email);
+        Image delete = FontImage.createMaterial(FontImage.MATERIAL_DELETE, "TitleCommand", 5).toImage();
         Container labels = new Container(BoxLayout.y()).addAll(lbUsername, lbEmail);
 //        System.out.println(theme.getImage("person.png").getImageName());
         global.addAll(imageViewer,labels);
 
-        lbUsername.addPointerPressedListener(evt -> {
+        lbUsername.addPointerReleasedListener(evt -> {
             UserShowForm userShowForm = new UserShowForm(username,user);
-
             userShowForm.show();
         });
         global.setLeadComponent(lbUsername);

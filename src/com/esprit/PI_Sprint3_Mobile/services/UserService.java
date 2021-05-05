@@ -16,7 +16,7 @@ import java.util.Map;
 public class UserService {
     public static UserService instance = null;
     public boolean resultOK;
-    private ConnectionRequest req;
+    public ConnectionRequest req;
     public ArrayList<User> users;
 
     public UserService() {
@@ -96,6 +96,14 @@ public class UserService {
                 .orElse(null);
     }
 
+    public User findById(int id){
+        List<User> users = findAll();
+        return users.stream()
+                .filter(user -> user.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
 
     public boolean save(User user) {
         String url = Statics.BASE_URL + "api/user/signUp";
@@ -123,4 +131,57 @@ public class UserService {
             return false;
         }
     }
+
+    public boolean update(User user) {
+        String url = Statics.BASE_URL + "api/user/update/"+user.getId();
+        req.setUrl(url);
+        req.setHttpMethod("PUT");
+        req.setContentType("application/json");
+        try {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("id", user.getId());
+            hashMap.put("nom", user.getNom());
+            hashMap.put("prenom", user.getPrenom());
+            // passsword w birthdate
+            req.setRequestBody(Result.fromContent(hashMap).toString());
+            req.addResponseListener(new ActionListener<NetworkEvent>() {
+                @Override
+                public void actionPerformed(NetworkEvent evt) {
+                    resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                    req.removeResponseListener(this);
+                }
+            });
+            System.out.println(req.getRequestBody());
+            NetworkManager.getInstance().addToQueueAndWait(req);
+            System.out.println("1");
+            return resultOK;
+        } catch (Exception e) {
+            System.out.println("2");
+            return false;
+        }
+    }
+
+    public boolean delete(int id) {
+        String url = Statics.BASE_URL + "api/user/delete/"+id;
+        req.setUrl(url);
+        req.setHttpMethod("DELETE");
+        req.setContentType("application/json");
+        try {
+            req.addResponseListener(new ActionListener<NetworkEvent>() {
+                @Override
+                public void actionPerformed(NetworkEvent evt) {
+                    resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                    req.removeResponseListener(this);
+                }
+            });
+            NetworkManager.getInstance().addToQueueAndWait(req);
+            System.out.println("User deleted !");
+            return resultOK;
+        } catch (Exception e) {
+            System.out.println("User could not be deleted !");
+            return false;
+        }
+
+    }
+
 }
