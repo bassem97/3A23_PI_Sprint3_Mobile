@@ -11,6 +11,7 @@ import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.User;
+import com.esprit.PI_Sprint3_Mobile.services.EventService;
 import com.esprit.PI_Sprint3_Mobile.services.UserService;
 
 /**
@@ -25,7 +26,6 @@ public class MyApplication {
     public void init(Object context) {
         // use two network threads instead of one
         updateNetworkThreadCount(2);
-
         theme = UIManager.initFirstTheme("/theme");
 
         // Enable Toolbar on all Forms by default

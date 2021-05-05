@@ -1,15 +1,11 @@
 package com.esprit.PI_Sprint3_Mobile.entities;
 
-
-
 public class Sponsor {
 
     private int id;
     private String name;
 
-
     public Sponsor() {
-
     }
 
     public Sponsor(int id, String name) {
@@ -47,7 +43,6 @@ public class Sponsor {
 
 
     }
-
 
 }
 

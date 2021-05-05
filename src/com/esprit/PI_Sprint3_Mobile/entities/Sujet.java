@@ -1,9 +1,6 @@
 package com.esprit.PI_Sprint3_Mobile.entities;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-import java.io.File;
 import java.time.LocalDateTime;
 
 public class Sujet {
@@ -12,13 +9,9 @@ public class Sujet {
     private Theme theme;
     private String image;
     private User user;
-    private ImageView imageView;
-    private ImageView ratingImg;
     private LocalDateTime dateTime;
 
     public Sujet() {
-        imageView = new ImageView();
-        ratingImg = new ImageView();
         dateTime = LocalDateTime.now();
     }
 
@@ -26,8 +19,6 @@ public class Sujet {
         dateTime = LocalDateTime.now();
         this.text = text;
         this.theme = theme;
-        imageView = new ImageView();
-        ratingImg = new ImageView();
 
     }
 
@@ -71,21 +62,6 @@ public class Sujet {
         this.user = user;
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
-
-    public ImageView getRatingImg() {
-        return ratingImg;
-    }
-
-    public void setRatingImg(ImageView ratingImg) {
-        this.ratingImg = ratingImg;
-    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -103,33 +79,8 @@ public class Sujet {
                 ", theme=" + theme +
                 ", image='" + image + '\'' +
                 ", user=" + user +
-                ", imageView=" + imageView +
-                ", ratingImg=" + ratingImg +
                 ", dateTime=" + dateTime +
                 '}';
     }
 
-    public void initializeImageView() {
-        File file = new File("src/assets/" + image);
-        try {
-            Image img = new Image(file.toURI().toString());
-            imageView.setImage(img);
-            imageView.setFitWidth(70);
-            imageView.setFitHeight(70);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void setRatingImage(String imgUrl) {
-        File file = new File("src/assets/" + imgUrl);
-        try {
-            Image img = new Image(file.toURI().toString());
-            ratingImg.setImage(img);
-            ratingImg.setFitWidth(50);
-            ratingImg.setFitHeight(50);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }
