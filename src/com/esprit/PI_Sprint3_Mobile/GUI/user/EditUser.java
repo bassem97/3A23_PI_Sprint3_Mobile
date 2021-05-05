@@ -1,14 +1,20 @@
 package com.esprit.PI_Sprint3_Mobile.GUI.user;
 
+import com.codename1.io.FileSystemStorage;
+import com.codename1.io.Storage;
 import com.codename1.ui.*;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.ui.util.ImageIO;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.entities.User;
 import com.esprit.PI_Sprint3_Mobile.services.UserService;
-import javafx.scene.control.DatePicker;
+import com.esprit.PI_Sprint3_Mobile.utils.FileChooser.*;
+
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 public class EditUser extends Form {
 
@@ -74,11 +80,40 @@ public class EditUser extends Form {
             img = theme.getImage(user.getUsername());
 
         uploadImg = FontImage.createMaterial(FontImage.MATERIAL_FILE_UPLOAD, "TitleCommand", 5).toImage();
+        Button button = new Button("upload");
 
+        button.addActionListener(evt -> {
+            ActionListener callback = e->{
+                if (e != null && e.getSource() != null) {
+                    String filePath = (String)e.getSource();
+                    System.out.println(filePath);
+                    try {
+                        img = Image.createImage(filePath);
+                        OutputStream os = FileSystemStorage.getInstance().openOutputStream(filePath);
+                        ImageIO.getImageIO().save(img, os, ImageIO.FORMAT_PNG, 1);
+                        os.close();
+
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+
+                }
+            };
+
+            if (FileChooser.isAvailable()) {
+                FileChooser.showOpenDialog(".gif,image/gif,.png,image/png,.jpg,image/jpg,.tif,image/tif,.jpeg", callback);
+            } else {
+                Display.getInstance().openGallery(callback, Display.GALLERY_IMAGE);
+            }
+        });
+
+        Container upload = new Container(new FlowLayout(Component.CENTER,Component.CENTER));
+        upload.add(uploadImg).add(button);
+        upload.setLeadComponent(button);
 
         Container ct1 = new Container(BoxLayout.y());
         ct1.addAll(nom,prenom,email);
-        ct.add(uploadImg).add(img);
+        ct.add(upload).add(img);
         this.addAll(ct,ct1);
     }
 }
