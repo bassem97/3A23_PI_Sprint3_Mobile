@@ -1,6 +1,5 @@
 package com.esprit.PI_Sprint3_Mobile.entities;
 
-import com.codename1.facebook.User;
 
 import java.time.LocalDateTime;
 

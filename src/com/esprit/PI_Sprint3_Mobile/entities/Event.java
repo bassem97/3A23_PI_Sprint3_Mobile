@@ -1,6 +1,5 @@
 package com.esprit.PI_Sprint3_Mobile.entities;
 
-import java.io.File;
 import java.time.LocalDateTime;
 
 public class Event {
