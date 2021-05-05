@@ -4,6 +4,7 @@ import com.codename1.io.*;
 import com.codename1.processing.Result;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
+import com.esprit.PI_Sprint3_Mobile.entities.EventType;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
 
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class EventService {
     }
 
     public boolean save(Event event) {
-        String url = Statics.BASE_URL + "api/event/new";
+        String url = Statics.BASE_URL + "api/event/new/eventtype/" + event.getEventType().getId();
         req.setUrl(url);
         req.setPost(true);
         req.setContentType("application/json");
@@ -60,7 +61,7 @@ public class EventService {
             hashMap.put("date", event.getDate());
             hashMap.put("club_id", event.getClub());
             hashMap.put("image", event.getImage());
-            hashMap.put("event_type_id", event.getEventType());
+            hashMap.put("eventType", event.getEventType());
             req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
@@ -72,6 +73,7 @@ public class EventService {
             NetworkManager.getInstance().addToQueueAndWait(req);
             return resultOK;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -146,6 +148,8 @@ public class EventService {
                 t.setId((int)id);
                 t.setName((obj.get("name").toString()));
                 t.setDescription(obj.get("description").toString());
+                // System.out.println(EventTypeService.getInstance().parseEventTypes(new String(req.getResponseData())));
+                t.setEventType(EventTypeService.getInstance().parseEventTypes(new String(req.getResponseData())).get(0));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
                         .replace("T", " ")
