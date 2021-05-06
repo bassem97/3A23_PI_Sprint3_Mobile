@@ -9,7 +9,9 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.entities.Categorie;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
+import com.esprit.PI_Sprint3_Mobile.services.CategorieService;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
 
 import java.time.LocalDateTime;
@@ -49,13 +51,11 @@ public class MyApplication {
     }
     
     public void start() {
-        Event event = new Event();
-        event.setId(32);
-        event.setName("codename");
-        event.setDescription("CEAJRR");
-        event.setNb_part_max(1);
-        event.setDate(LocalDateTime.now());
-        System.out.println(EventService.getInstance().delete(26));
+        Categorie categorie = new Categorie();
+        categorie.setId(32);
+        categorie.setTitre("codename");
+        categorie.setDescription("CEAJRR");
+        System.out.println(CategorieService.getInstance().delete(26));
         // System.out.println(EventService.getInstance().findAll());
         if(current != null){
             current.show();
