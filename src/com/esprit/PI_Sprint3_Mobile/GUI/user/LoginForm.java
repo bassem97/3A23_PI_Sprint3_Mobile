@@ -40,7 +40,7 @@ public class LoginForm extends Form {
     }
     public void addAction(){
         btnLogin.addActionListener(event -> {
-            User user = UserService.getInstance().findByEmail(tfEmail.getText());
+            // User user = UserService.getInstance().findByEmail(tfEmail.getText());
 //            if(user == null)
 ////                Dialog.show("Confirmation", "Voulez-vous choisir " + pays + " ?", "OK", null );
 //                Dialog.show("ERROR", "User does'nt exist", "OK", null);
