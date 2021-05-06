@@ -4,7 +4,6 @@ import com.codename1.io.*;
 import com.codename1.processing.Result;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
-import com.esprit.PI_Sprint3_Mobile.entities.EventType;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
 
 import java.io.IOException;
@@ -148,7 +147,7 @@ public class EventService {
                 t.setId((int)id);
                 t.setName((obj.get("name").toString()));
                 t.setDescription(obj.get("description").toString());
-                // System.out.println(EventTypeService.getInstance().parseEventTypes(new String(req.getResponseData())));
+                t.setNb_part_max((int)Float.parseFloat(obj.get("nbPartMax").toString()));
                 t.setEventType(EventTypeService.getInstance().parseEventTypes(new String(req.getResponseData())).get(0));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
