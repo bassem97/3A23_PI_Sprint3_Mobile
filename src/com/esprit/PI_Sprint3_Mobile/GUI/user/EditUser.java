@@ -10,7 +10,8 @@ import com.codename1.ui.util.ImageIO;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.entities.User;
 import com.esprit.PI_Sprint3_Mobile.services.UserService;
-import com.esprit.PI_Sprint3_Mobile.utils.FileChooser.*;
+//import com.esprit.PI_Sprint3_Mobile.utils.FileChooser.*;
+import com.esprit.PI_Sprint3_Mobile.utils.FileChooser.FileChooser;
 
 
 import java.io.IOException;
@@ -88,7 +89,8 @@ public class EditUser extends Form {
                     String filePath = (String)e.getSource();
                     System.out.println(filePath);
                     try {
-                        img = Image.createImage(filePath);
+//                        img = Image.createImage(filePath);
+                        img = theme.getImage("person.png");
                         OutputStream os = FileSystemStorage.getInstance().openOutputStream(filePath);
                         ImageIO.getImageIO().save(img, os, ImageIO.FORMAT_PNG, 1);
                         os.close();

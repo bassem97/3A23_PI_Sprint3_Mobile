@@ -139,9 +139,10 @@ public class UserService {
         req.setContentType("application/json");
         try {
             HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("id", user.getId());
+            hashMap.put("id",  user.getId());
             hashMap.put("nom", user.getNom());
             hashMap.put("prenom", user.getPrenom());
+            hashMap.put("email", user.getEmail());
             // passsword w birthdate
             req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -156,7 +157,7 @@ public class UserService {
             System.out.println("1");
             return resultOK;
         } catch (Exception e) {
-            System.out.println("2");
+            System.out.println(e.getMessage());
             return false;
         }
     }
