@@ -13,7 +13,7 @@ import com.codename1.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.esprit.PI_Sprint3_Mobile.utils.FileChooser.*;
+import com.esprit.PI_Sprint3_Mobile.utils.FileChooser.FileChooserNative;
 
 /**
  *
@@ -126,7 +126,7 @@ public class FileChooser {
 
     private static FileChooserNative nativePeer() {
         if (nativePeer == null) {
-//            nativePeer = (FileChooserNative)NativeLookup.create(FileChooserNative.class);
+            nativePeer = (FileChooserNative)NativeLookup.create(FileChooserNative.class);
         }
         return nativePeer;
     }

@@ -52,8 +52,8 @@ public class MyApplication {
         }
 
 //        System.out.println(UserService.getInstance().findByEmail("bassem.jadoui@esrit.tn"));
-        User user = UserService.getInstance().findById(122);
-        user.setNom("bassem");
+//        User user = UserService.getInstance().findById(122);
+//        user.setNom("bassem");
 //        System.out.println(UserService.getInstance().delete(75));
         new LoginForm().show();
 //        User user = new User();
