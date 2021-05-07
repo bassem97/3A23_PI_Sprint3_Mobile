@@ -1,6 +1,5 @@
 package com.esprit.PI_Sprint3_Mobile.entities;
 
-
 public class ResponsableCategorie {
     private int id ;
     private String nom;
@@ -59,7 +58,7 @@ public class ResponsableCategorie {
         return categorie;
     }
 
-    public void setCategorie(Categorie categorie) {
+    public void setCategorie(String categorie) {
         this.categorie = categorie;
     }
 
@@ -68,3 +67,4 @@ public class ResponsableCategorie {
         return "ResponsableCategorie{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", categorie=" + categorie + '}';
     }
 }
+
