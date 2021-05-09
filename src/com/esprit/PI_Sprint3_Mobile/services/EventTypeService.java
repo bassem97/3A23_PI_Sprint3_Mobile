@@ -43,6 +43,71 @@ public class EventTypeService {
         return eventTypes;
     }
 
+    public boolean save(EventType eventType) {
+        String url = Statics.BASE_URL + "api/eventtype/new?name=" + eventType.getName();
+        req.setUrl(url);
+        req.setContentType("application/json");
+        try {
+
+            req.addResponseListener(new ActionListener<NetworkEvent>() {
+                @Override
+                public void actionPerformed(NetworkEvent evt) {
+                    resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                    req.removeResponseListener(this);
+                }
+            });
+            NetworkManager.getInstance().addToQueueAndWait(req);
+            return resultOK;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean update(EventType eventType) {
+        String url = Statics.BASE_URL + "api/eventtype/" + eventType.getId() + "/update?name=" + eventType.getName();
+        req.setUrl(url);
+        req.setContentType("application/json");
+        try {
+            req.addResponseListener(new ActionListener<NetworkEvent>() {
+                @Override
+                public void actionPerformed(NetworkEvent evt) {
+                    resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                    req.removeResponseListener(this);
+                }
+            });
+            NetworkManager.getInstance().addToQueueAndWait(req);
+            return resultOK;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+
+    public boolean delete(int id) {
+        String url = Statics.BASE_URL + "api/eventtype/" + id + "/delete";
+        req.setUrl(url);
+        req.setHttpMethod("DELETE");
+        req.setContentType("application/json");
+        try {
+            req.addResponseListener(new ActionListener<NetworkEvent>() {
+                @Override
+                public void actionPerformed(NetworkEvent evt) {
+                    resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                    req.removeResponseListener(this);
+                }
+            });
+            NetworkManager.getInstance().addToQueueAndWait(req);
+            return resultOK;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
+
     public ArrayList<EventType> parseEventTypes(String jsonText){
         try {
             eventTypes =new ArrayList<>();

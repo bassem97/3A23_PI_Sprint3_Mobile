@@ -1,6 +1,5 @@
 package com.esprit.PI_Sprint3_Mobile.GUI.event;
 
-import com.codename1.components.ToastBar;
 import com.codename1.io.FileSystemStorage;
 import com.codename1.ui.*;
 import com.codename1.ui.events.ActionListener;
@@ -91,14 +90,11 @@ public class EventAddForm extends Form {
             event.setNb_part_max(Integer.parseInt(tfNbPartMax.getText()));
             event.setDate(Instant.ofEpochMilli(datePicker.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime());
             event.setEventType(eventTypeComboBox.getSelectedItem());
-            ToastBar.Status status = ToastBar.getInstance().createStatus();
             if (EventService.getInstance().save(event)) {
-                status.setMessage("Evènement Ajouté");
+                Dialog.show("Information", event.getName() + " Ajouté", "OK",null);
                 new EventListForm().show();
-            } else {
-                status.setMessage("Erreur");
-            }
-            status.show();
+            } else
+                Dialog.show("Erreur", "Erreur D'ajout", "Ok",null);
         });
 
         eventTypeComboBox.addActionListener(actionEvent -> {
