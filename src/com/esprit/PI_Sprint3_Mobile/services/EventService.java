@@ -78,9 +78,10 @@ public class EventService {
     }
 
     public boolean update(Event event) {
-        String url = Statics.BASE_URL + "api/event/" + event.getId() + "/update";
+        // String url = Statics.BASE_URL + "api/event/" + event.getId() + "/update";
+        String url = Statics.BASE_URL + "api/event/" + event.getId() + "/update?name=" + event.getName() + "&description=" + event.getDescription() + "&nb_part_max=" + event.getNb_part_max();
         req.setUrl(url);
-        req.setHttpMethod("PUT");
+        //req.setHttpMethod("PUT");
         req.setContentType("application/json");
         try {
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -92,7 +93,7 @@ public class EventService {
             hashMap.put("club_id", event.getClub());
             hashMap.put("image", event.getImage());
             hashMap.put("event_type_id", event.getEventType());
-            req.setRequestBody(Result.fromContent(hashMap).toString());
+            // req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
