@@ -47,17 +47,17 @@ public class PostService {
     }
 
     public boolean save(Post post) {
-        String url = Statics.BASE_URL + "api/post/new";
+        String url = Statics.BASE_URL + "api/post/new/sujet/" + post.getSujet().getId();
         req.setUrl(url);
         req.setPost(true);
         req.setContentType("application/json");
         try {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("text", post.getText());
-            hashMap.put("image", post.getImage());
-            hashMap.put("sujet_id", post.getSujet());
+            //hashMap.put("image", post.getImage());
+           // hashMap.put("sujet", post.getSujet());
      /*       hashMap.put("user_id", post.getUser());*/
-            hashMap.put("rating", post.getRating());
+           // hashMap.put("rating", 0);
             req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
@@ -124,9 +124,6 @@ public class PostService {
     }
 
 
-
-
-
     public ArrayList<Post> parsePosts(String jsonText){
         try {
             posts=new ArrayList<>();
@@ -144,6 +141,8 @@ public class PostService {
                 p.setImage((obj.get("image").toString()));
                 float rating = Float.parseFloat(obj.get("rating").toString());
                 p.setRating((int)rating);
+                float sujetId = Float.parseFloat(obj.get("sujetId").toString());
+                p.setSujet(SujetService.getInstance().findById((int) sujetId));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
                         .replace("T", " ")

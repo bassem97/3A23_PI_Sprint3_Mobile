@@ -10,8 +10,11 @@ import com.codename1.ui.util.Resources;
 import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
+import com.esprit.PI_Sprint3_Mobile.entities.Theme;
 import com.esprit.PI_Sprint3_Mobile.entities.User;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
+import com.esprit.PI_Sprint3_Mobile.services.SujetService;
+import com.esprit.PI_Sprint3_Mobile.services.ThemeService;
 import com.esprit.PI_Sprint3_Mobile.services.UserService;
 
 /**
@@ -46,6 +49,7 @@ public class MyApplication {
     }
     
     public void start() {
+        System.out.println(SujetService.getInstance().findById(34));
         if(current != null){
             current.show();
             return;

@@ -17,6 +17,7 @@ public class ThemeService {
     private ConnectionRequest req;
     private boolean resultOK;
     ArrayList<Theme> themes;
+    Theme theme;
 
     private ThemeService() {
         req = new ConnectionRequest();
@@ -30,7 +31,7 @@ public class ThemeService {
     }
 
     public ArrayList<Theme> findAll(){
-        String url = Statics.BASE_URL + "api/theme";
+        String url = Statics.BASE_URL + "api/theme/list";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -44,15 +45,26 @@ public class ThemeService {
         return themes;
     }
 
-    public boolean save(Theme theme) {
-        String url = Statics.BASE_URL + "api/theme/new";
+    public Theme findById(int id){
+        String url = Statics.BASE_URL + "api/theme/"+ id + "/find";
         req.setUrl(url);
-        req.setPost(true);
-        req.setContentType("application/json");
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                theme = parseThemes(new String(req.getResponseData())).get(0);
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return theme;
+    }
+
+
+    public boolean save(Theme theme) {
+        String url = Statics.BASE_URL + "api/theme/new?libelle=" + theme.getLibelle();
+        req.setUrl(url);
         try {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("libelle", theme.getLibelle());
-            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -63,6 +75,7 @@ public class ThemeService {
             NetworkManager.getInstance().addToQueueAndWait(req);
             return resultOK;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -129,15 +142,20 @@ public class ThemeService {
                 Theme t = new Theme();
                 float id = Float.parseFloat(obj.get("id").toString());
                 t.setId((int)id);
-                t.setLibelle((obj.get("libelle").toString()));
+//                t.setLibelle("elli yji");
+//                t.setLibelle(obj.get("libelle").toString().sou
+                t.setLibelle(obj.get("libelle").toString());
 
                 themes.add(t);
+
             }
+            return themes;
 
         } catch (IOException ex) {
-
+            return null;
         }
 
-        return themes;
+
+
     }
 }

@@ -72,6 +72,7 @@ public class EventService {
             NetworkManager.getInstance().addToQueueAndWait(req);
             return resultOK;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }

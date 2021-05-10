@@ -38,7 +38,7 @@ public class EventListForm extends Form {
         Container labels = new Container(BoxLayout.y()).addAll(lbName, lbDescription, lbDate);
         global.addAll(labels);
 
-        /*lbName.addPointerPressedListener(evt -> {
+       /* lbName.addPointerPressedListener(evt -> {
             UserShowForm userShowForm = new UserShowForm();
             FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 3);
             userShowForm.getToolbar().addCommandToLeftBar("Return to list ",icon,evt1 -> this.show());
