@@ -48,7 +48,7 @@ public class EventListForm extends Form {
         lbName.getAllStyles().setFgColor(ColorUtil.rgb(228, 53, 83));
         lbName.getAllStyles().setFont(Font.createSystemFont(lbName.getUnselectedStyle().getFont().getFace(), Font.STYLE_UNDERLINED, lbName.getUnselectedStyle().getFont().getSize()));
         Label lbDescription = new Label(event.getDescription());
-        Label lbDate = new Label(event.getDate().toString());
+        Label lbDate = new Label(event.getDate().toLocalDate().toString());
         Container labels = new Container(BoxLayout.y()).addAll(lbName, lbDescription, lbDate);
         global.addAll(imageViewer, labels);
 
