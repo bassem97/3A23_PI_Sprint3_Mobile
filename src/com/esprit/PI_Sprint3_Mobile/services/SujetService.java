@@ -19,6 +19,7 @@ public class SujetService {  private static SujetService instance= null;
     private ConnectionRequest req;
     private boolean resultOK;
     ArrayList<Sujet> sujets;
+    Sujet sujet;
 
     private SujetService() {
         req = new ConnectionRequest();
@@ -44,6 +45,21 @@ public class SujetService {  private static SujetService instance= null;
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return sujets;
+    }
+
+    public Sujet findById(int id){
+        String url = Statics.BASE_URL + "api/sujet/"+ id + "/find";
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                sujet = parseSujets(new String(req.getResponseData())).get(0);
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return sujet;
     }
 
     public boolean save(Sujet sujet) {
@@ -139,7 +155,8 @@ public class SujetService {  private static SujetService instance= null;
                 s.setId((int)id);
                 s.setText((obj.get("text").toString()));
                 s.setImage((obj.get("image").toString()));
-                s.setTheme((Theme) obj.get("theme_id"));
+                float themeId = Float.parseFloat(obj.get("themeId").toString());
+                s.setTheme(ThemeService.getInstance().findById((int) themeId));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
                         .replace("T", " ")

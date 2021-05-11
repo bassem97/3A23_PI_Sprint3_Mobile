@@ -5,6 +5,7 @@ import com.codename1.ui.Form;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.event.EventListForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.theme.ThemeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserListForm;
 import sun.misc.Resource;
@@ -37,6 +38,7 @@ public class Home extends Form {
         this.getToolbar().addCommandToSideMenu("Users",null,evt1 -> new UserListForm().show());
         this.getToolbar().addCommandToSideMenu("Events",null,evt1 -> new EventListForm().show());
         this.getToolbar().addCommandToSideMenu("Articles",null,evt1 -> evt1.toString());
+        this.getToolbar().addCommandToSideMenu("Forum",null,evt1 -> new ThemeListForm().show());
         this.getToolbar().addCommandToSideMenu("settings",null,evt1 -> evt1.toString());
     }
 }
