@@ -16,7 +16,7 @@ import java.util.Map;
 public class UserService {
     public static UserService instance = null;
     public boolean resultOK;
-    private ConnectionRequest req;
+    public ConnectionRequest req;
     public ArrayList<User> users;
 
     public UserService() {
@@ -30,38 +30,12 @@ public class UserService {
         return instance;
     }
 
-    public ArrayList<User> parseTasks(String jsonText) {
+    public ArrayList<User> parseUsers(String jsonText) {
         try {
             users = new ArrayList<>();
             JSONParser j = new JSONParser();// Instanciation d'un objet JSONParser permettant le parsing du résultat json
-
-            /*
-                On doit convertir notre réponse texte en CharArray à fin de
-            permettre au JSONParser de la lire et la manipuler d'ou vient 
-            l'utilité de new CharArrayReader(json.toCharArray())
-            
-            La méthode parse json retourne une MAP<String,Object> ou String est 
-            la clé principale de notre résultat.
-            Dans notre cas la clé principale n'est pas définie cela ne veux pas
-            dire qu'elle est manquante mais plutôt gardée à la valeur par defaut
-            qui est root.
-            En fait c'est la clé de l'objet qui englobe la totalité des objets 
-                    c'est la clé définissant le tableau de tâches.
-            */
-            Map<String, Object> tasksListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
-            
-              /* Ici on récupère l'objet contenant notre liste dans une liste 
-            d'objets json List<MAP<String,Object>> ou chaque Map est une tâche.               
-            
-            Le format Json impose que l'objet soit définit sous forme
-            de clé valeur avec la valeur elle même peut être un objet Json.
-            Pour cela on utilise la structure Map comme elle est la structure la
-            plus adéquate en Java pour stocker des couples Key/Value.
-            
-            Pour le cas d'un tableau (Json Array) contenant plusieurs objets
-            sa valeur est une liste d'objets Json, donc une liste de Map
-            */
-            List<Map<String, Object>> list = (List<Map<String, Object>>) tasksListJson.get("root");
+            Map<String, Object> usersListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            List<Map<String, Object>> list = (List<Map<String, Object>>) usersListJson.get("root");
 
             //Parcourir la liste des tâches Json
             for (Map<String, Object> obj : list) {
@@ -75,6 +49,11 @@ public class UserService {
                 user.setEmail(obj.get("email").toString());
 //                user.setGoogle_id(obj.get("google_id").toString());
                 user.setPassword(obj.get("password").toString());
+//                System.out.println(obj.get("image").toString());
+                if(obj.get("image") == null)
+                    user.setImage(null);
+                else
+                    user.setImage(obj.get("image").toString());
 //                user.setCreation_date(obj.get("creation_date"));
 //                user.setLast_login(obj.get("last_login"));
 
@@ -101,12 +80,28 @@ public class UserService {
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                users = parseTasks(new String(req.getResponseData()));
+                users = parseUsers(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return users;
+    }
+
+    public User findByEmail(String email){
+        List<User> users = findAll();
+         return users.stream()
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public User findById(int id){
+        List<User> users = findAll();
+        return users.stream()
+                .filter(user -> user.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
 
@@ -136,4 +131,58 @@ public class UserService {
             return false;
         }
     }
+
+    public boolean update(User user) {
+        String url = Statics.BASE_URL + "api/user/update/"+user.getId();
+        req.setUrl(url);
+        req.setHttpMethod("PUT");
+        req.setContentType("application/json");
+        try {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("id",  user.getId());
+            hashMap.put("nom", user.getNom());
+            hashMap.put("prenom", user.getPrenom());
+            hashMap.put("email", user.getEmail());
+            // passsword w birthdate
+            req.setRequestBody(Result.fromContent(hashMap).toString());
+            req.addResponseListener(new ActionListener<NetworkEvent>() {
+                @Override
+                public void actionPerformed(NetworkEvent evt) {
+                    resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                    req.removeResponseListener(this);
+                }
+            });
+            System.out.println(req.getRequestBody());
+            NetworkManager.getInstance().addToQueueAndWait(req);
+            System.out.println("1");
+            return resultOK;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean delete(int id) {
+        String url = Statics.BASE_URL + "api/user/delete/"+id;
+        req.setUrl(url);
+        req.setHttpMethod("DELETE");
+        req.setContentType("application/json");
+        try {
+            req.addResponseListener(new ActionListener<NetworkEvent>() {
+                @Override
+                public void actionPerformed(NetworkEvent evt) {
+                    resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                    req.removeResponseListener(this);
+                }
+            });
+            NetworkManager.getInstance().addToQueueAndWait(req);
+            System.out.println("User deleted !");
+            return resultOK;
+        } catch (Exception e) {
+            System.out.println("User could not be deleted !");
+            return false;
+        }
+
+    }
+
 }

@@ -97,6 +97,7 @@ public class Event {
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
                 ", date=" + date +
+                ", eventType=" + eventType +
                 '}';
     }
 
