@@ -5,8 +5,8 @@
     To learn more about Codename One go to https://www.codenameone.com/
     -->
         
-    <project name="MaterialScreensUIKit" default="default" basedir=".">
-    <description>Builds, tests, and runs the project MaterialScreensUIKit.</description>
+    <project name="PI_Sprint3_Mobile" default="default" basedir=".">
+    <description>Builds, tests, and runs the project </description>
     <import file="nbproject/build-impl.xml"/>
     <property file="codenameone_settings.properties"/>
     <property name="automated" value="false" />

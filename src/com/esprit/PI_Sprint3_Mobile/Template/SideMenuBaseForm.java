@@ -17,17 +17,15 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-package com.codename1.uikit.materialscreens;
+package com.esprit.PI_Sprint3_Mobile.Template;
 
-import com.codename1.components.ToastBar;
-import com.codename1.ui.Container;
-import com.codename1.ui.FontImage;
-import com.codename1.ui.Form;
-import com.codename1.ui.Image;
-import com.codename1.ui.Label;
+import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.GUI.event.EventListForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserListForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 
 /**
  * Common code that can setup the side menu
@@ -52,22 +50,31 @@ public abstract class SideMenuBaseForm extends Form {
     }
     
     public void setupSideMenu(Resources res) {
-        Image profilePic = res.getImage("user-picture.jpg");
+        EncodedImage placeHolder = EncodedImage.createFromImage(res.getImage("person.png"), false);
+        Image profilePic;
+        if (UserSession.getUser().getImage().equals("") || UserSession.getUser().getImage() == null )
+            profilePic = res.getImage("person.png");
+        else
+            profilePic = URLImage.createToStorage(placeHolder,UserSession.getUser().getUsername(),UserSession.getUser().getImage());
         Image mask = res.getImage("round-mask.png");
         mask = mask.scaledHeight(mask.getHeight() / 4 * 3);
         profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
-        Label profilePicLabel = new Label("  Jennifer Wilson", profilePic, "SideMenuTitle");
+        Label profilePicLabel = new Label(UserSession.getUser().getNom()+" "+UserSession.getUser().getPrenom(), profilePic, "SideMenuTitle");
         profilePicLabel.setMask(mask.createMask());
 
         Container sidemenuTop = BorderLayout.center(profilePicLabel);
         sidemenuTop.setUIID("SidemenuTop");
         
         getToolbar().addComponentToSideMenu(sidemenuTop);
-        getToolbar().addMaterialCommandToSideMenu("  Dashboard", FontImage.MATERIAL_DASHBOARD,  e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Activity", FontImage.MATERIAL_TRENDING_UP,  e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Tasks", FontImage.MATERIAL_ACCESS_TIME,  e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Account Settings", FontImage.MATERIAL_SETTINGS,  e -> showOtherForm(res));
-        getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
+        getToolbar().addMaterialCommandToSideMenu("  Home", FontImage.MATERIAL_DASHBOARD,  e -> showOtherForm(res));
+        getToolbar().addMaterialCommandToSideMenu("  Users", FontImage.MATERIAL_VERIFIED_USER,  e -> new UserListForm().show());
+//        getToolbar().addMaterialCommandToSideMenu("  Activity", FontImage.MATERIAL_TRENDING_UP,  e -> showOtherForm(res));
+        getToolbar().addMaterialCommandToSideMenu("  Events", FontImage.MATERIAL_EMOJI_EVENTS,  e -> new EventListForm().show());
+        getToolbar().addMaterialCommandToSideMenu("  Forum", FontImage.MATERIAL_FORUM,  e -> showOtherForm(res));
+        getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e ->{
+            UserSession.logOut();
+            new LoginForm(res).show();
+        });
     }
     
     protected abstract void showOtherForm(Resources res);

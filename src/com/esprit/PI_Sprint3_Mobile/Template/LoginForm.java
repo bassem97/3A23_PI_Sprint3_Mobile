@@ -17,21 +17,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-package com.codename1.uikit.materialscreens;
+package com.esprit.PI_Sprint3_Mobile.Template;
 
-import com.codename1.ui.Button;
-import com.codename1.ui.Container;
-import com.codename1.ui.Display;
-import com.codename1.ui.FontImage;
-import com.codename1.ui.Form;
-import com.codename1.ui.Image;
-import com.codename1.ui.Label;
-import com.codename1.ui.TextField;
-import com.codename1.ui.Toolbar;
+import com.codename1.components.ImageViewer;
+import com.codename1.ui.*;
+import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
+import com.esprit.PI_Sprint3_Mobile.entities.User;
+import com.esprit.PI_Sprint3_Mobile.services.UserService;
 
 /**
  * The Login form
@@ -43,20 +40,24 @@ public class LoginForm extends Form {
         super(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
         setUIID("LoginForm");
         Container welcome = FlowLayout.encloseCenter(
-                new Label("Welcome, ", "WelcomeWhite"),
-                new Label("Jennifer", "WelcomeBlue")
+                new Label("Welcome To ", "WelcomeWhite"),
+                new Label("ESPRITGAZINE", "WelcomeBlue")
         );
-        
+
         getTitleArea().setUIID("Container");
         
-        Image profilePic = theme.getImage("user-picture.jpg");
+//        Image profilePic = theme.getImage("user-picture.jpg");
+        Image profilePic = theme.getImage("logo.png");
         Image mask = theme.getImage("round-mask.png");
-        profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
+//        profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
+        ImageViewer imageViewer = new ImageViewer(profilePic);
+        imageViewer.setPreferredSize(new Dimension(300,250));
+
         Label profilePicLabel = new Label(profilePic, "ProfilePic");
-        profilePicLabel.setMask(mask.createMask());
+//        profilePicLabel.setMask(mask.createMask());
         
-        TextField login = new TextField("jennifer.wilson88@gmail.com", "Login", 20, TextField.EMAILADDR) ;
-        TextField password = new TextField("password", "Password", 20, TextField.PASSWORD) ;
+        TextField login = new TextField("bassem.jadoui@esprit.tn", "Login", 20, TextField.EMAILADDR) ;
+        TextField password = new TextField("123456", "Password", 20, TextField.PASSWORD) ;
         login.getAllStyles().setMargin(LEFT, 0);
         password.getAllStyles().setMargin(LEFT, 0);
         Label loginIcon = new Label("", "TextField");
@@ -70,9 +71,15 @@ public class LoginForm extends Form {
         loginButton.setUIID("LoginButton");
         loginButton.addActionListener(e -> {
             Toolbar.setGlobalToolbar(false);
-            new WalkthruForm(theme).show();
+            User user = UserService.getInstance().findAll()
+                    .stream().filter(user1 -> user1.getId() == 118).findAny().get();
+            UserSession.setInstace(user);
+            WalkthruForm walkthruForm = new WalkthruForm(theme);
+            walkthruForm.show();
+//            new ProfileForm( walkthruForm.theme, UserSession.getUser()).show();
             Toolbar.setGlobalToolbar(true);
         });
+
         
         Button createNewAccount = new Button("CREATE NEW ACCOUNT");
         createNewAccount.setUIID("CreateNewAccountButton");
@@ -87,8 +94,8 @@ public class LoginForm extends Form {
         
         
         Container by = BoxLayout.encloseY(
+                imageViewer,
                 welcome,
-                profilePicLabel,
                 spaceLabel,
                 BorderLayout.center(login).
                         add(BorderLayout.WEST, loginIcon),

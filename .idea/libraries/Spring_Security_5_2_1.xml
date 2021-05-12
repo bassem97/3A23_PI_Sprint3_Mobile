@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Spring Security-5.2.1" type="spring-security">
+    <properties version="5.2.1" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/impl/native/javase/spring-security-crypto-5.2.1.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

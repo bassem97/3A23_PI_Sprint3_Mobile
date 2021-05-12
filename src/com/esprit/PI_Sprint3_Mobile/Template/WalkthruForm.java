@@ -17,26 +17,17 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-package com.codename1.uikit.materialscreens;
+package com.esprit.PI_Sprint3_Mobile.Template;
 
 import com.codename1.components.SpanLabel;
-import com.codename1.ui.Button;
-import com.codename1.ui.ButtonGroup;
-import com.codename1.ui.Component;
-import com.codename1.ui.Container;
-import com.codename1.ui.Form;
-import com.codename1.ui.Image;
-import com.codename1.ui.Label;
-import com.codename1.ui.RadioButton;
-import com.codename1.ui.Tabs;
-import com.codename1.ui.Toolbar;
+import com.codename1.ui.*;
 import com.codename1.ui.animations.CommonTransitions;
-import com.codename1.ui.events.SelectionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 
 /**
  * A swipe tutorial for the application
@@ -44,8 +35,10 @@ import com.codename1.ui.util.Resources;
  * @author Shai Almog
  */
 public class WalkthruForm extends Form {
+    public Resources theme;
     public WalkthruForm(Resources res) {
         super(new LayeredLayout());
+        this.theme = res;
         getTitleArea().removeAll();
         getTitleArea().setUIID("Container");
         
@@ -118,8 +111,9 @@ public class WalkthruForm extends Form {
         
         Button skip = new Button("SKIP TUTORIAL");
         skip.setUIID("SkipButton");
-        skip.addActionListener(e -> new ProfileForm(res).show());
-        
+        skip.addActionListener(e -> new ProfileForm(res, UserSession.getUser()).show());
+//        skip.addActionListener(e -> new Home().show());
+
         Container southLayout = BoxLayout.encloseY(
                         radioContainer,
                         skip

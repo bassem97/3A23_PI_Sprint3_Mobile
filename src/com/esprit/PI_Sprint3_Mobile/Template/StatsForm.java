@@ -17,7 +17,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-package com.codename1.uikit.materialscreens;
+package com.esprit.PI_Sprint3_Mobile.Template;
 
 import com.codename1.charts.ChartComponent;
 import com.codename1.charts.models.XYMultipleSeriesDataset;
@@ -25,22 +25,18 @@ import com.codename1.charts.models.XYSeries;
 import com.codename1.charts.renderers.XYMultipleSeriesRenderer;
 import com.codename1.charts.renderers.XYSeriesRenderer;
 import com.codename1.charts.views.CubicLineChart;
-import com.codename1.charts.views.PointStyle;
 import com.codename1.ui.Button;
-import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
-import com.codename1.ui.Font;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
-import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
-import com.codename1.ui.table.TableModel;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 
 /**
  *
@@ -141,7 +137,7 @@ public class StatsForm extends SideMenuBaseForm {
     
     @Override
     protected void showOtherForm(Resources res) {
-        new ProfileForm(res).show();
+        new ProfileForm(res, UserSession.getUser()).show();
     }
 
     private XYMultipleSeriesRenderer createChartMultiRenderer() {

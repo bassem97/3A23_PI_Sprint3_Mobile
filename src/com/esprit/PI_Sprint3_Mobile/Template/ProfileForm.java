@@ -17,23 +17,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-package com.codename1.uikit.materialscreens;
+package com.esprit.PI_Sprint3_Mobile.Template;
 
 import com.codename1.components.FloatingActionButton;
 import com.codename1.components.MultiButton;
-import com.codename1.ui.Button;
-import com.codename1.ui.Container;
-import com.codename1.ui.FontImage;
-import com.codename1.ui.Graphics;
-import com.codename1.ui.Image;
-import com.codename1.ui.Label;
-import com.codename1.ui.Toolbar;
+import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
+import com.esprit.PI_Sprint3_Mobile.entities.User;
 
 /**
  * Represents a user profile in the app, the first form we open after the walkthru
@@ -41,11 +37,16 @@ import com.codename1.ui.util.Resources;
  * @author Shai Almog
  */
 public class ProfileForm extends SideMenuBaseForm {
-    public ProfileForm(Resources res) {
+    public ProfileForm(Resources res, User user) {
         super(BoxLayout.y());
-        Toolbar tb = getToolbar();
+        Toolbar tb = this.getToolbar();
         tb.setTitleCentered(false);
-        Image profilePic = res.getImage("user-picture.jpg");
+        EncodedImage placeHolder = EncodedImage.createFromImage(res.getImage("person.png"), false);
+        Image profilePic;
+        if (UserSession.getUser().getImage().equals("") || UserSession.getUser().getImage() == null )
+             profilePic = res.getImage("person.png");
+        else
+            profilePic = URLImage.createToStorage(placeHolder,UserSession.getUser().getUsername(),UserSession.getUser().getImage());
         Image mask = res.getImage("round-mask.png");
         profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
         Label profilePicLabel = new Label(profilePic, "ProfilePicTitle");
@@ -71,8 +72,8 @@ public class ProfileForm extends SideMenuBaseForm {
                         FlowLayout.encloseIn(menuButton),
                         BorderLayout.centerAbsolute(
                                 BoxLayout.encloseY(
-                                    new Label("Jennifer Wilson", "Title"),
-                                    new Label("UI/UX Designer", "SubTitle")
+                                    new Label(UserSession.getUser().getNom()+" "+UserSession.getUser().getPrenom(), "Title"),
+                                    new Label(UserSession.getUser().getEmail(), "SubTitle")
                                 )
                             ).add(BorderLayout.WEST, profilePicLabel),
                         GridLayout.encloseIn(2, remainingTasks, completedTasks)
