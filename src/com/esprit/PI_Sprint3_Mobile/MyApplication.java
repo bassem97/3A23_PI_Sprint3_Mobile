@@ -8,9 +8,6 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
-import com.esprit.PI_Sprint3_Mobile.jars.prettyTime.PrettyTime;
-
-import java.util.Date;
 
 import static com.codename1.ui.CN.*;
 
@@ -50,9 +47,6 @@ public class MyApplication {
             current.show();
             return;
         }
-        PrettyTime p = new PrettyTime();
-        System.out.println(p.format(new Date()));
-
 //        System.out.println(UserService.getInstance().findByEmail("bassem.jadoui@esrit.tn"));
 //        User user = UserService.getInstance().findById(122);
 //        user.setNom("bassem");

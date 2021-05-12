@@ -45,6 +45,9 @@ public class LoginForm extends Form {
 ////                Dialog.show("Confirmation", "Voulez-vous choisir " + pays + " ?", "OK", null );
 //                Dialog.show("ERROR", "User does'nt exist", "OK", null);
 //            else if()
+            User user = UserService.getInstance().findAll()
+                    .stream().filter(user1 -> user1.getId() == 18).findAny().get();
+            UserSession.setInstace(user);
             Home home = new Home();
             home.show();
         });

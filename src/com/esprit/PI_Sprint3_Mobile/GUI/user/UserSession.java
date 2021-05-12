@@ -22,11 +22,21 @@ public final class UserSession {
         UserSession.privileges = privileges;
     }
 
+    public UserSession(User user) {
+        UserSession.user = user;
+    }
+
     public UserSession() {
     }
 
 
 
+    public static UserSession setInstace(User user) {
+        if(instance == null) {
+            instance = new UserSession(user);
+        }
+        return instance;
+    }
 
 
     public static UserSession setInstace(User user, List<String> privileges) {

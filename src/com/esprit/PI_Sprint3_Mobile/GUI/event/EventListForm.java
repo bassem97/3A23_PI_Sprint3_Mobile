@@ -11,6 +11,7 @@ import com.esprit.PI_Sprint3_Mobile.GUI.eventType.EventTypeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
+import com.esprit.PI_Sprint3_Mobile.utils.EventParticipateMail;
 
 import java.io.IOException;
 
@@ -52,7 +53,10 @@ public class EventListForm extends Form {
         Container labels = new Container(BoxLayout.y()).addAll(lbName, lbDescription, lbDate);
         global.addAll(imageViewer, labels);
 
-        lbName.addPointerReleasedListener(evt -> new EventShowForm(event).show());
+        lbName.addPointerReleasedListener(evt -> {
+            new EventShowForm(event).show();
+            // EventParticipateMail.sendMail("karim.mannai@esprit.tn", event);
+        });
         global.setLeadComponent(lbName);
 
         return global;
