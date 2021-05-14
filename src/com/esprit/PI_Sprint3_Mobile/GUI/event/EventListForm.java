@@ -6,8 +6,10 @@ import com.codename1.ui.*;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
-import com.esprit.PI_Sprint3_Mobile.GUI.Home;
+import com.esprit.PI_Sprint3_Mobile.GUI.eventType.EventTypeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
+import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
 
@@ -30,7 +32,8 @@ public class EventListForm extends Form {
 
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
-        this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
+        this.getToolbar().addCommandToOverflowMenu("Types Events",null,evt1 -> new EventTypeListForm().show());
+        this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme, UserSession.getUser()).show());
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
 
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "TitleCommand", 5), evt1 -> new EventAddForm().show());
@@ -46,7 +49,7 @@ public class EventListForm extends Form {
         lbName.getAllStyles().setFgColor(ColorUtil.rgb(228, 53, 83));
         lbName.getAllStyles().setFont(Font.createSystemFont(lbName.getUnselectedStyle().getFont().getFace(), Font.STYLE_UNDERLINED, lbName.getUnselectedStyle().getFont().getSize()));
         Label lbDescription = new Label(event.getDescription());
-        Label lbDate = new Label(event.getDate().toString());
+        Label lbDate = new Label(event.getDate().toLocalDate().toString());
         Container labels = new Container(BoxLayout.y()).addAll(lbName, lbDescription, lbDate);
         global.addAll(imageViewer, labels);
 

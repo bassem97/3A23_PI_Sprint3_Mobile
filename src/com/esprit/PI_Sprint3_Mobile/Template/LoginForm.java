@@ -72,7 +72,7 @@ public class LoginForm extends Form {
         loginButton.addActionListener(e -> {
             Toolbar.setGlobalToolbar(false);
             User user = UserService.getInstance().findAll()
-                    .stream().filter(user1 -> user1.getId() == 118).findAny().get();
+                    .stream().filter(user1 -> user1.getId() == 18).findAny().get();
             UserSession.setInstace(user);
             WalkthruForm walkthruForm = new WalkthruForm(theme);
             walkthruForm.show();
