@@ -2,25 +2,18 @@ package com.esprit.PI_Sprint3_Mobile.GUI.event;
 
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.components.ImageViewer;
-import com.codename1.io.rest.Response;
-import com.codename1.io.rest.Rest;
 import com.codename1.ui.*;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
-import com.codename1.util.Base64;
 import com.esprit.PI_Sprint3_Mobile.GUI.eventType.EventTypeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
 
 import java.io.IOException;
-import java.util.Map;
 
 public class EventListForm extends Form {
 

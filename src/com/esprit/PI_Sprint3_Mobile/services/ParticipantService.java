@@ -3,7 +3,6 @@ package com.esprit.PI_Sprint3_Mobile.services;
 import com.codename1.io.*;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
-import com.esprit.PI_Sprint3_Mobile.entities.EventType;
 import com.esprit.PI_Sprint3_Mobile.entities.Participant;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
 
