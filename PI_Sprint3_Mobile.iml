@@ -14,10 +14,11 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" name="CodeNameOne" level="project" />
     <orderEntry type="library" name="Spring-5.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Spring Security-5.2.1" level="project" />
     <orderEntry type="library" name="javax.mail" level="project" />
-    <orderEntry type="library" name="fontawesomefx-8.9" level="project" />
+    <orderEntry type="library" name="CodenameOne" level="project" />
+    <orderEntry type="library" name="jackson-core-2.12.3" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.12.3" level="project" />
   </component>
 </module>

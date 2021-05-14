@@ -1,6 +1,5 @@
 package com.esprit.PI_Sprint3_Mobile.GUI.event;
 
-import com.codename1.components.ToastBar;
 import com.codename1.io.FileSystemStorage;
 import com.codename1.ui.*;
 import com.codename1.ui.events.ActionListener;
@@ -13,6 +12,7 @@ import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.NumericConstraint;
 import com.codename1.ui.validation.Validator;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.entities.EventType;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
@@ -43,7 +43,7 @@ public class EventAddForm extends Form {
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
-//        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
+        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
 
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5), evt1 -> new EventListForm().show());
 
@@ -74,7 +74,7 @@ public class EventAddForm extends Form {
                 new Container(BoxLayout.xCenter()).add(tfNbPartMax),
                 new Container(BoxLayout.xCenter()).addAll(lbDate, datePicker),
                 new Container(new BoxLayout(BoxLayout.Y_AXIS)).add(eventTypeComboBox),
-               // upload,
+                // upload,
                 btnSave);
 
         Validator val = new Validator();
@@ -90,14 +90,11 @@ public class EventAddForm extends Form {
             event.setNb_part_max(Integer.parseInt(tfNbPartMax.getText()));
             event.setDate(Instant.ofEpochMilli(datePicker.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime());
             event.setEventType(eventTypeComboBox.getSelectedItem());
-            ToastBar.Status status = ToastBar.getInstance().createStatus();
             if (EventService.getInstance().save(event)) {
-                status.setMessage("Evènement Ajouté");
+                Dialog.show("Information", event.getName() + " Ajouté", "OK",null);
                 new EventListForm().show();
-            } else {
-                status.setMessage("Erreur");
-            }
-            status.show();
+            } else
+                Dialog.show("Erreur", "Erreur D'ajout", "Ok",null);
         });
 
         eventTypeComboBox.addActionListener(actionEvent -> {
