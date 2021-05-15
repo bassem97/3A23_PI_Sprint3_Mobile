@@ -58,7 +58,6 @@ public class MyApplication {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();;
 //        new LoginForm(theme).show();
         new LoginForm(theme).show();
     }
