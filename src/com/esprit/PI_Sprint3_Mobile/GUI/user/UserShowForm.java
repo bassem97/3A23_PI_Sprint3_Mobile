@@ -67,6 +67,7 @@ public class UserShowForm extends Form {
             img = theme.getImage(user.getUsername());
 
         Container ct1 = new Container(BoxLayout.x());
+        ct1.getAllStyles().setPadding(Component.BOTTOM,6);
         ct1.addAll(Nom,Prenom);
 
 
