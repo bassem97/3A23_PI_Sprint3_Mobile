@@ -30,8 +30,8 @@ public class ParticipantService {
         return instance;
     }
 
-    public ArrayList<Participant> findAll(){
-        String url = Statics.BASE_URL + "api/participant/list/user/" + UserSession.getUser().getUsername();
+    public ArrayList<Participant> findAll() {
+        String url = Statics.BASE_URL + "api/participant/list/user/" + UserSession.getUser().getId();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
