@@ -39,7 +39,7 @@ public class ParticipantShowForm extends Form {
 
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
-        this.getToolbar().addCommandToOverflowMenu("Home", null, evt1 -> new ProfileForm(theme, UserSession.getUser()).show());
+        this.getToolbar().addCommandToOverflowMenu("Home", null, evt1 -> new ProfileForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> new LoginForm().show());
 
         if (participant.getEvent().getDate().toLocalDate().isAfter(LocalDate.now())) {

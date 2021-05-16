@@ -8,8 +8,8 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.eventType.EventTypeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.participant.ParticipantListForm;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
+import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
@@ -34,9 +34,9 @@ public class EventListForm extends Form {
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
         this.getToolbar().addCommandToOverflowMenu("Types Events",null,evt1 -> new EventTypeListForm().show());
-        this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme, UserSession.getUser()).show());
+        this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu("Mes Events",null,evt1 -> new ParticipantListForm().show());
-        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
+        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme).show());
 
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "TitleCommand", 5), evt1 -> new EventAddForm().show());
 

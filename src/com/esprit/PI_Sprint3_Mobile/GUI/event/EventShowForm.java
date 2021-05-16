@@ -6,8 +6,8 @@ import com.codename1.ui.*;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
+import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.entities.Participant;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
@@ -41,7 +41,7 @@ public class EventShowForm extends Form {
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
-        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
+        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme).show());
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_DELETE, "TitleCommand", 5), actionEvent -> {
             if(Dialog.show("Confirmation", "Supprimer " + event.getName() + " ?", "Oui", "Non" )) {
                 EventService.getInstance().delete(event.getId());
