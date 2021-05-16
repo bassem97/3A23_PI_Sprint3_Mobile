@@ -21,23 +21,19 @@ public class UserShowForm extends Form {
 
 
     public UserShowForm(String title, User user) {
+//        super(title,new FlowLayout(Component.CENTER,Component.CENTER));
         super(title,new FlowLayout(Component.CENTER,Component.CENTER));
+//        super(title, BoxLayout.y());
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5);
         FontImage edit = FontImage.createMaterial(FontImage.MATERIAL_EDIT, "TitleCommand", 5);
         FontImage delete = FontImage.createMaterial(FontImage.MATERIAL_DELETE, "TitleCommand", 5);
         this.getToolbar().addCommandToLeftBar(null,icon,evt1 -> new UserListForm().show());
         this.getToolbar().addCommandToRightBar(null,delete,evt1 -> {
-
             if(Dialog.show("Confirmation", "Are u sure to delete "+user.getUsername()+" ?", "Yes", "Cancel" ))
             {
                 UserService.getInstance().delete(user.getId());
                 new UserListForm().show();
             }
-
-
-
-
-
         });
         this.getToolbar().addCommandToRightBar(null,edit,evt1 -> new EditUser(user).show());
 

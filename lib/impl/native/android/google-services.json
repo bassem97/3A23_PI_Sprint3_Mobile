@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "82910536233",
+    "project_id": "espritgazine-79df5",
+    "storage_bucket": "espritgazine-79df5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82910536233:android:925185b5498f8bbff07238",
+        "android_client_info": {
+          "package_name": "com.esprit.PI_Sprint3_Mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82910536233-limtb64mvgcjm55sli7rl3vucg01uebv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6qYFwqopHjpMC-ivxkl-cQgY-Zl-UYoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82910536233-limtb64mvgcjm55sli7rl3vucg01uebv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -29,7 +29,6 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
-import com.esprit.PI_Sprint3_Mobile.entities.User;
 
 /**
  * Represents a user profile in the app, the first form we open after the walkthru
@@ -37,7 +36,7 @@ import com.esprit.PI_Sprint3_Mobile.entities.User;
  * @author Shai Almog
  */
 public class ProfileForm extends SideMenuBaseForm {
-    public ProfileForm(Resources res, User user) {
+    public ProfileForm(Resources res) {
         super(BoxLayout.y());
         Toolbar tb = this.getToolbar();
         tb.setTitleCentered(false);

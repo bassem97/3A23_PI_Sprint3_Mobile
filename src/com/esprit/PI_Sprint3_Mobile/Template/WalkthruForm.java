@@ -27,7 +27,6 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.util.Resources;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 
 /**
  * A swipe tutorial for the application
@@ -38,6 +37,7 @@ public class WalkthruForm extends Form {
     public Resources theme;
     public WalkthruForm(Resources res) {
         super(new LayeredLayout());
+//        System.out.println("HNEE "+UserSession.getUser());
         this.theme = res;
         getTitleArea().removeAll();
         getTitleArea().setUIID("Container");
@@ -111,7 +111,7 @@ public class WalkthruForm extends Form {
         
         Button skip = new Button("SKIP TUTORIAL");
         skip.setUIID("SkipButton");
-        skip.addActionListener(e -> new ProfileForm(res, UserSession.getUser()).show());
+        skip.addActionListener(e -> new ProfileForm(res).show());
 //        skip.addActionListener(e -> new Home().show());
 
         Container southLayout = BoxLayout.encloseY(
@@ -126,8 +126,8 @@ public class WalkthruForm extends Form {
         Component.setSameHeight(bottomSpace, bottomSpaceTab2, southLayout);
         
         // visual effects in the first show
-        addShowListener(e -> {
-            notesPlaceholder.getParent().replace(notesPlaceholder, notesLabel, CommonTransitions.createFade(1500));
-        });
+//        addShowListener(e -> {
+//            notesPlaceholder.getParent().replace(notesPlaceholder, notesLabel, CommonTransitions.createFade(1500));
+//        });
     }    
 }

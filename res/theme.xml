@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<resource majorVersion="1" minorVersion="10" useXmlUI="false">
+<resource majorVersion="1" minorVersion="11" useXmlUI="false">
     <image name="BackgroundRect.png" type="multi"  />
     <image name="Cracks.jpg"  />
     <image name="duke.png" type="multi"  />
+    <image name="ESPRITGAZINE.jpg"  />
     <image name="gradient-overlay.png"  />
     <image name="login-background.jpg"  />
     <image name="logo.png"  />
@@ -105,7 +106,7 @@
         <val key="LoginButton.sel#padding" value="2.0,2.0,2.0,2.0" />
         <val key="LoginButton.sel#transparency" value="255" />
         <val key="LoginButton.transparency" value="255" />
-        <val key="LoginForm.bgImage" value="login-background.jpg" />
+        <val key="LoginForm.bgImage" value="ESPRITGAZINE.jpg" />
         <val key="LoginForm.bgType" value="33" />
         <val key="LoginForm.margin" value="0.0,0.0,0.0,0.0" />
         <val key="LoginForm.padUnit" value="2,2,2,2" />

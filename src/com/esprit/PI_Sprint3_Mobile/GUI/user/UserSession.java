@@ -33,14 +33,10 @@ public final class UserSession {
 
 
 
-    public static UserSession setInstace(User user, List<String> privileges) {
-        if(instance == null) {
-            instance = new UserSession(user,privileges);
-        }
-        return instance;
-    }
     public static UserSession setInstace(User user) {
+        System.out.println("isntance "+instance);
         if(instance == null) {
+            System.out.println("DKHAAAAAAAAAAAL");
             instance = new UserSession(user);
         }
         return instance;
@@ -60,7 +56,7 @@ public final class UserSession {
 
     public static   void logOut() {
         user = null;// or null
-        privileges = null;// or null
+        instance = null;
 
     }
 

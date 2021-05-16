@@ -36,7 +36,6 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 
 /**
  *
@@ -137,7 +136,7 @@ public class StatsForm extends SideMenuBaseForm {
     
     @Override
     protected void showOtherForm(Resources res) {
-        new ProfileForm(res, UserSession.getUser()).show();
+        new ProfileForm(res).show();
     }
 
     private XYMultipleSeriesRenderer createChartMultiRenderer() {
