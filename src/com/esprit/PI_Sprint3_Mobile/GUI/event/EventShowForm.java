@@ -76,8 +76,6 @@ public class EventShowForm extends Form {
                 new Container(BoxLayout.yBottom()).add(btnParticipate)
         );
 
-        // System.out.println(ParticipantService.getInstance().findAll().stream().filter(participant -> participant.getUser().getId() == UserSession.getUser().getId()).collect(Collectors.toList()));
-
     }
 
     private void addActions() {
