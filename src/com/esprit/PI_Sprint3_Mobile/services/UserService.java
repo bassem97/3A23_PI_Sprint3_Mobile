@@ -116,10 +116,12 @@ public class UserService {
     }
 
     public boolean update(User user) {
-        String url = Statics.BASE_URL + "api/user/update/"+user.getId();
+//        String url = Statics.BASE_URL + "api/user/update/"+user.getId();
+        String url = Statics.BASE_URL + "api/user/update/"+ user.getId() + "?nom=" + user.getNom() + "&prenom=" + user.getPrenom() + "&email="+ user.getEmail() ;
         req.setUrl(url);
-        req.setHttpMethod("PUT");
+//        req.setHttpMethod("PUT");
         req.setContentType("application/json");
+//        System.out.println(user);
         try {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("id",  user.getId());
@@ -127,7 +129,7 @@ public class UserService {
             hashMap.put("prenom", user.getPrenom());
             hashMap.put("email", user.getEmail());
             // passsword w birthdate
-            req.setRequestBody(Result.fromContent(hashMap).toString());
+//            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -135,9 +137,9 @@ public class UserService {
                     req.removeResponseListener(this);
                 }
             });
-            System.out.println(req.getRequestBody());
+//            System.out.println(req.getRequestBody());
             NetworkManager.getInstance().addToQueueAndWait(req);
-            System.out.println("1");
+//            System.out.println("1");
             return resultOK;
         } catch (Exception e) {
             System.out.println(e.getMessage());

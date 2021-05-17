@@ -25,8 +25,6 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 /**
@@ -60,6 +58,7 @@ public class MyApplication {
 //        }
 //        new LoginForm(theme).show();
         new LoginForm(theme).show();
+//        new EditUser(UserService.getInstance().findAll().stream().filter(user -> user.getEmail().toLowerCase().contains("eya")).findAny().orElse(null)).show();
     }
 
     public void stop() {

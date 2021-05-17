@@ -6,8 +6,8 @@ import com.codename1.ui.*;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
-import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
+import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.User;
 import com.esprit.PI_Sprint3_Mobile.services.UserService;
 
@@ -20,7 +20,8 @@ public class UserListForm extends Form {
 
     public UserListForm (){
 
-        super("Users",BoxLayout.y());
+        super("",BoxLayout.y());
+//        super("Users",BoxLayout.y());
         try {
             theme = Resources.openLayered("/theme");
         } catch (IOException e) {
@@ -35,7 +36,9 @@ public class UserListForm extends Form {
 
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
-        this.getToolbar().addCommandToLeftBar("Home",null,evt1 -> new ProfileForm(theme));
+        FontImage Home = FontImage.createMaterial(FontImage.MATERIAL_HOME_FILLED, "TitleCommand", 5);
+        this.getToolbar().addCommandToLeftBar(null,Home,evt1 -> new ProfileForm(theme).show());
+
         this.getToolbar().addCommandToRightBar(null,icon,evt1 -> new LoginForm(theme).show());
 
         new UserService().findAll().forEach(user -> {
