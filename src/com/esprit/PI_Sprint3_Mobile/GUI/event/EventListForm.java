@@ -15,6 +15,7 @@ import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EventListForm extends Form {
 
@@ -40,24 +41,49 @@ public class EventListForm extends Form {
 
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "TitleCommand", 5), evt1 -> new EventAddForm().show());
 
-        EventService.getInstance().findAll().forEach(event -> this.add(item(event)));
+        ArrayList<Event> events = EventService.getInstance().findAll();
+        events.forEach(event -> this.add(item(event)));
+        TextField tfSeach = new TextField("", "Search");
+        tfSeach.addPointerReleasedListener(event2 -> {
+            if(tfSeach.getText().length() > 0) {
+                ArrayList<Event> aux = new ArrayList<>(events);
+                this.removeAll();
+                aux.stream().filter(event -> event.getName().contains(tfSeach.getText().toLowerCase())).forEach(event ->{
+                    System.out.println(tfSeach.getText());
+                    System.out.println(event);
+                    this.add(item(event));
+                });
+            } else {
+                this.removeAll();
+                ArrayList<Event> aux = new ArrayList<>(events);
+                aux.forEach(event -> this.add(item(event)));
+            }
+        });
+        this.getToolbar().setTitleComponent(tfSeach);
     }
 
     private Container item(Event event){
-        ImageViewer imageViewer = new ImageViewer(theme.getImage("Cracks.jpg"));
-        imageViewer.setPreferredSize(new Dimension(300,300));
-        Container global = new Container(BoxLayout.x());
-        Label lbName = new Label(event.getName());
-        lbName.getAllStyles().setFgColor(ColorUtil.rgb(228, 53, 83));
-        lbName.getAllStyles().setFont(Font.createSystemFont(lbName.getUnselectedStyle().getFont().getFace(), Font.STYLE_UNDERLINED, lbName.getUnselectedStyle().getFont().getSize()));
-        Label lbDescription = new Label(event.getDescription());
-        Label lbDate = new Label(event.getDate().toLocalDate().toString());
-        Container labels = new Container(BoxLayout.y()).addAll(lbName, lbDescription, lbDate);
-        global.addAll(imageViewer, labels);
+        try {
+            Container global = new Container(BoxLayout.x());
+            EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(300, 300, 0xffff0000), true);
+            URLImage background = URLImage.createToStorage(placeholder, event.getImage(), "");
+            Label lbName = new Label(event.getName());
+            lbName.getAllStyles().setFgColor(ColorUtil.rgb(228, 53, 83));
+            lbName.getAllStyles().setFont(Font.createSystemFont(lbName.getUnselectedStyle().getFont().getFace(), Font.STYLE_UNDERLINED, lbName.getUnselectedStyle().getFont().getSize()));
+            Label lbDescription = new Label(event.getDescription());
+            Label lbDate = new Label(event.getDate().toLocalDate().toString());
+            Container labels = new Container(BoxLayout.y()).addAll(lbName, lbDescription, lbDate);
+            global.add(background);
+            global.add(labels);
 
-        lbName.addPointerReleasedListener(evt -> new EventShowForm(event).show());
-        global.setLeadComponent(lbName);
+            lbName.addPointerReleasedListener(evt -> new EventShowForm(event).show());
+            global.setLeadComponent(lbName);
 
-        return global;
+            return global;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Container();
+        }
     }
 }
