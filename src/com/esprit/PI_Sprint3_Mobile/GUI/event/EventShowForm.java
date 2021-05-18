@@ -67,8 +67,11 @@ public class EventShowForm extends Form {
         lbPlaces = new Label("Encore " + places + " Places Disponibles !");
         btnParticipate = new Button("Participer");
 
+        EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(300, 300, 0xffff0000), true);
+        URLImage background = URLImage.createToStorage(placeholder, event.getImage(), "");
 
-        this.addAll(new Container(BoxLayout.yCenter()).add(new ImageViewer(theme.getImage("Cracks.jpg"))),
+        this.add(background);
+        this.addAll(
                 new Container(BoxLayout.xCenter()).add(lbName),
                 new Container(BoxLayout.xCenter()).add(lbDescription),
                 new Container(BoxLayout.xCenter()).add(lbPlaces),
