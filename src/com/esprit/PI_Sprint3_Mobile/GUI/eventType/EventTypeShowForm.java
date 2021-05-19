@@ -1,5 +1,6 @@
 package com.esprit.PI_Sprint3_Mobile.GUI.eventType;
 
+import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
@@ -43,6 +44,7 @@ public class EventTypeShowForm extends Form {
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5), evt1 -> new EventTypeListForm().show());
 
         tfName = new TextField(eventType.getName(), "Nom");
+        tfName.getAllStyles().setFgColor(ColorUtil.BLACK);
         btnUpdate = new Button("Modifier");
 
         this.addAll(new Container(BoxLayout.xCenter()).add(tfName), btnUpdate);

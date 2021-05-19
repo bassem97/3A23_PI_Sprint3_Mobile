@@ -1,5 +1,6 @@
 package com.esprit.PI_Sprint3_Mobile.GUI.event;
 
+import com.codename1.charts.util.ColorUtil;
 import com.codename1.io.FileSystemStorage;
 import com.codename1.io.Log;
 import com.codename1.ui.*;
@@ -36,7 +37,6 @@ public class EventAddForm extends Form {
     private Picker datePicker;
     private Button btnSave, btnImg;
     private Image img ;
-    private Image uploadImg;
     ComboBox<EventType> eventTypeComboBox;
     private Resources theme;
     private String imageName;
@@ -65,16 +65,19 @@ public class EventAddForm extends Form {
         tfNbPartMax = new TextField();
         datePicker = new Picker();
         eventTypeComboBox = new ComboBox<>();
+        tfName.getAllStyles().setFgColor(ColorUtil.BLACK);
+        tfDescription.getAllStyles().setFgColor(ColorUtil.BLACK);
+        tfNbPartMax.getAllStyles().setFgColor(ColorUtil.BLACK);
+        datePicker.getAllStyles().setFgColor(ColorUtil.BLACK);
         EventTypeService.getInstance().findAll().forEach(eventType1 -> eventTypeComboBox.addItem(eventType1));
         eventTypeComboBox.setRenderer(new DefaultListCellRenderer(false));
 
         btnSave = new Button("Ajouter");
-        uploadImg = FontImage.createMaterial(FontImage.MATERIAL_FILE_UPLOAD, "TitleCommand", 5).toImage();
         btnImg = new Button("Image");
 
 
         Container upload = new Container(new FlowLayout(Component.CENTER,Component.CENTER));
-        upload.add(uploadImg).add(btnImg).add(img);
+        upload.add(btnImg).add(img);
         upload.setLeadComponent(btnImg);
 
 
@@ -108,7 +111,7 @@ public class EventAddForm extends Form {
                         Image logo;
 
                         try {
-                            logo = Image.createImage(file).scaledHeight(500);;
+                            logo = Image.createImage(file).scaledHeight(500);
                             add(logo);
                             if (file.lastIndexOf(".") > 0) {
                                 StringBuilder hi = new StringBuilder(file);
@@ -158,9 +161,7 @@ public class EventAddForm extends Form {
                 Dialog.show("Erreur", "Erreur D'ajout", "Ok",null);
         });
 
-        eventTypeComboBox.addActionListener(actionEvent -> {
-            System.out.println(eventTypeComboBox.getSelectedItem().getId());
-        });
+        eventTypeComboBox.addActionListener(actionEvent -> System.out.println(eventTypeComboBox.getSelectedItem().getId()));
 
         btnImg.addActionListener(evt -> {
             ActionListener callback = e->{
