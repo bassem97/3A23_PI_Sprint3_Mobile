@@ -117,7 +117,7 @@ public class UserService {
 
     public boolean update(User user) {
 //        String url = Statics.BASE_URL + "api/user/update/"+user.getId();
-        String url = Statics.BASE_URL + "api/user/update/"+ user.getId() + "?nom=" + user.getNom() + "&prenom=" + user.getPrenom() + "&email="+ user.getEmail() ;
+        String url = Statics.BASE_URL + "api/user/update/"+ user.getId() + "?nom=" + user.getNom() + "&prenom=" + user.getPrenom() + "&email="+ user.getEmail() + "&image="+user.getImage() ;
         req.setUrl(url);
 //        req.setHttpMethod("PUT");
         req.setContentType("application/json");
@@ -128,6 +128,7 @@ public class UserService {
             hashMap.put("nom", user.getNom());
             hashMap.put("prenom", user.getPrenom());
             hashMap.put("email", user.getEmail());
+            hashMap.put("image", user.getImage());
             // passsword w birthdate
 //            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
