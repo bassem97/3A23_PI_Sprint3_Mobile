@@ -5,8 +5,8 @@
  */
 package com.esprit.PI_Sprint3_Mobile.entities;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 
 public class Form {
 
@@ -15,10 +15,10 @@ public class Form {
     private String description;
     private boolean isClosed;
     private boolean isArchived;
-    private Date creationDate;
-    private Date updateDate;
-    private Date closeDate;
-    private Date openDate;
+    private LocalDateTime creationDate;
+    private LocalDateTime updateDate;
+    private LocalDateTime closeDate;
+    private LocalDateTime openDate;
     private Boolean areMailsSent;
     private Boolean isOpen;
     private Event event;
@@ -32,7 +32,7 @@ public class Form {
         this.id = id;
     }
 
-    public Form(Integer id, String title, String description, boolean isClosed, boolean isArchived, Date creationDate, Date updateDate, Date openDate) {
+    public Form(Integer id, String title, String description, boolean isClosed, boolean isArchived, LocalDateTime creationDate, LocalDateTime updateDate, LocalDateTime openDate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -83,35 +83,35 @@ public class Form {
         this.isArchived = isArchived;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getUpdateDate() {
+    public LocalDateTime getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(Date updateDate) {
+    public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
     }
 
-    public Date getCloseDate() {
+    public LocalDateTime getCloseDate() {
         return closeDate;
     }
 
-    public void setCloseDate(Date closeDate) {
+    public void setCloseDate(LocalDateTime closeDate) {
         this.closeDate = closeDate;
     }
 
-    public Date getOpenDate() {
+    public LocalDateTime getOpenDate() {
         return openDate;
     }
 
-    public void setOpenDate(Date openDate) {
+    public void setOpenDate(LocalDateTime openDate) {
         this.openDate = openDate;
     }
 
