@@ -16,6 +16,7 @@ public class EventTypeService {
     private ConnectionRequest req;
     private boolean resultOK;
     ArrayList<EventType> eventTypes;
+    EventType eventType;
 
     private EventTypeService() {
         req = new ConnectionRequest();
@@ -41,6 +42,21 @@ public class EventTypeService {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return eventTypes;
+    }
+
+    public EventType findById(int id){
+        String url = Statics.BASE_URL + "api/eventtype/"+ id + "/find";
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                eventType = parseEventTypes(new String(req.getResponseData())).get(0);
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return eventType;
     }
 
     public boolean save(EventType eventType) {

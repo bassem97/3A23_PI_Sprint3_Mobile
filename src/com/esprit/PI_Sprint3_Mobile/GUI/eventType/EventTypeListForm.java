@@ -31,6 +31,8 @@ public class EventTypeListForm extends Form {
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme).show());
 
+        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_PIE_CHART, "", 5), evt1 -> new EventTypeStats());
+
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "", 5), evt1 -> new EventTypeAddForm().show());
 
         ArrayList<EventType> eventTypes = EventTypeService.getInstance().findAll();
