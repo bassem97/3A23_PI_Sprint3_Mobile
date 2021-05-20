@@ -15,6 +15,7 @@ import com.esprit.PI_Sprint3_Mobile.services.EventService;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class EventListForm extends Form {
 
     private Resources theme;
