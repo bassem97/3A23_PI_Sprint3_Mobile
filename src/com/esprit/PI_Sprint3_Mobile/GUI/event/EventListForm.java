@@ -31,6 +31,7 @@ public class EventListForm extends Form {
 
 
     private void addGUIs() {
+
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Types Events",null,evt1 -> new EventTypeListForm().show());
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme).show());
@@ -40,7 +41,8 @@ public class EventListForm extends Form {
             new LoginForm(theme).show();
         });
 
-        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "", 5), evt1 -> new EventAddForm().show());
+        if (UserSession.getUser().getRoles().contains("ADMIN"))
+            this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "", 5), evt1 -> new EventAddForm().show());
 
         ArrayList<Event> events = EventService.getInstance().findAll();
         events.forEach(event -> this.add(item(event)));
