@@ -10,6 +10,7 @@ import com.esprit.PI_Sprint3_Mobile.entities.Theme;
 import com.esprit.PI_Sprint3_Mobile.services.ThemeService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ThemeListForm extends Form {
 
@@ -30,11 +31,28 @@ public class ThemeListForm extends Form {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(res).show());
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
+        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_PIE_CHART, "", 5), evt1 -> new ThemeStats());
+
         if (/*UserSession.getUser().getRoles().contains("ROLE_ADMIN")*/ true)
             this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "", 5), evt1 -> new ThemeAddForm().show());
 
-        ThemeService.getInstance().findAll().forEach(theme -> {
+        /*ThemeService.getInstance().findAll().forEach(theme -> {
             this.add(item(theme));
+        });*/
+        ArrayList<Theme> themes = ThemeService.getInstance().findAll();
+        themes.forEach(theme -> this.add(item(theme)));
+        this.getToolbar().addSearchCommand(e ->{
+            String text = (String)e.getSource();
+            if (text != null && text.length() != 0){
+                this.removeAll();
+                themes
+                        .stream()
+                        .filter(th -> th.getLibelle().contains(text))
+                        .forEach(th1 -> this.add(item(th1)));
+            }else{
+                this.removeAll();
+                themes.forEach(th2 -> this.add(item(th2)));
+            }
         });
     }
 

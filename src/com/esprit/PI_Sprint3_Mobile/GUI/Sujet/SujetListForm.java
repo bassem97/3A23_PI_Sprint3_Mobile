@@ -12,11 +12,15 @@ import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Sujet;
 import com.esprit.PI_Sprint3_Mobile.entities.Theme;
 import com.esprit.PI_Sprint3_Mobile.services.SujetService;
+import com.esprit.PI_Sprint3_Mobile.services.ThemeService;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SujetListForm extends Form {
 private Theme theme;
@@ -44,11 +48,29 @@ private Theme theme;
 
 
 
-        SujetService.getInstance()
+        /*SujetService.getInstance()
                 .findAll()
                 .stream()
                 .filter(sujet->sujet.getTheme().getId()==themee.getId())
-                .forEach(sujet1 -> this.add(item(sujet1)));
+                .forEach(sujet1 -> this.add(item(sujet1)));*/
+        List<Sujet> sujets = SujetService.getInstance().findAll().stream()
+                .filter(sujet->sujet.getTheme().getId()==themee.getId()).collect(Collectors.toList());
+
+
+        sujets.forEach(sujet -> this.add(item(sujet)));
+        this.getToolbar().addSearchCommand(e ->{
+            String text = (String)e.getSource();
+            if (text != null && text.length() != 0){
+                this.removeAll();
+                sujets
+                        .stream()
+                        .filter(th -> th.getText().contains(text))
+                        .forEach(th1 -> this.add(item(th1)));
+            }else{
+                this.removeAll();
+                sujets.forEach(th2 -> this.add(item(th2)));
+            }
+        });
     }
 
 

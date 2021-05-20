@@ -13,11 +13,14 @@ import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Post;
 import com.esprit.PI_Sprint3_Mobile.entities.Sujet;
 import com.esprit.PI_Sprint3_Mobile.services.PostService;
+import com.esprit.PI_Sprint3_Mobile.services.SujetService;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PostListForm extends Form {
     private Sujet sujet;
@@ -43,13 +46,31 @@ public class PostListForm extends Form {
 
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "", 5), evt1 -> new PostListForm(sujet).show());
 
-        PostService.getInstance()
+      /*  PostService.getInstance()
                 .findAll()
                 .stream()
                 .filter(post->post.getSujet().getId()==sujet.getId())
                 .forEach(post -> {
                     this.add(item(post));
-                });
+                });*/
+        List<Post> posts = PostService.getInstance().findAll().stream()
+                .filter(post->sujet.getId()==post.getSujet().getId()).collect(Collectors.toList());
+
+
+        posts.forEach(post -> this.add(item(post)));
+        this.getToolbar().addSearchCommand(e ->{
+            String text = (String)e.getSource();
+            if (text != null && text.length() != 0){
+                this.removeAll();
+                posts
+                        .stream()
+                        .filter(th -> th.getText().contains(text))
+                        .forEach(th1 -> this.add(item(th1)));
+            }else{
+                this.removeAll();
+                posts.forEach(th2 -> this.add(item(th2)));
+            }
+        });
     }
 
 
