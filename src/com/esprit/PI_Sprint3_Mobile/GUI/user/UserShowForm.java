@@ -1,6 +1,7 @@
 package com.esprit.PI_Sprint3_Mobile.GUI.user;
 
 import com.codename1.components.ImageViewer;
+import com.codename1.io.FileSystemStorage;
 import com.codename1.ui.*;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BoxLayout;
@@ -19,6 +20,8 @@ public class UserShowForm extends Form {
     private  Label Nom = new Label();
     private  Label email = new Label();
     private  Label creationDate = new Label();
+    private ImageViewer imageViewer = null;
+
 
 
     public UserShowForm(String title, User user) {
@@ -56,20 +59,28 @@ public class UserShowForm extends Form {
 
     private void addGUI() {
         Container ct = new Container(BoxLayout.y());
-        Image img;
+        Image img = null;
         EncodedImage placeHolder = EncodedImage.createFromImage(theme.getImage("person.png"), false);
+        URLImage background = URLImage.createToStorage(placeHolder, user.getImage(), "");
+
         if(user.getImage() == null || user.getImage().equals(""))
             img = theme.getImage("person.png");
         else if(user.getImage().contains("google")){
             String url = user.getImage();
             img = URLImage.createToStorage(placeHolder,user.getUsername(),url);
         }else
-            img = theme.getImage(user.getUsername());
+            try {
+                img = Image.createImage(FileSystemStorage.getInstance().getAppHomePath() + user.getImage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         ImageViewer imageViewer = new ImageViewer(img);
         imageViewer.setPreferredSize(new Dimension(1400,800));
 
         ct.addAll(Nom,email,creationDate);
+
+
         this.addAll(imageViewer,ct);
 //        this.addAll(ct,Nom,email,creationDate);
     }

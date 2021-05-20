@@ -36,7 +36,7 @@ public class EditUser extends Form {
     private  FontImage save;
     private Image uploadImg;
     private ImageViewer imageViewer;
-    private String imageName;
+    private String imageName = "";
 //    private PickerComponent birthDate = new PickerComponent();
 
     public EditUser(User user) {
@@ -89,6 +89,7 @@ public class EditUser extends Form {
                 user2.setNom(nom.getText());
                 user2.setPrenom(prenom.getText());
                 user2.setEmail(email.getText());
+                System.out.println("HNAAAAAAAA***"+imageName);
                 if(imageName.length() == 0)
                     user2.setImage(user.getImage());
                 else
@@ -102,16 +103,25 @@ public class EditUser extends Form {
 
 
         } );
-        EncodedImage placeHolder = EncodedImage.createFromImage(theme.getImage("person.png"), false);
+        EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffff0000), true);
+        URLImage background = URLImage.createToStorage(placeholder, user.getImage(), "");
 
 
         if(user.getImage() == null || user.getImage().equals(""))
             img = theme.getImage("person.png");
         else if(user.getImage().contains("google")){
+//            String url = user.getImage();
+//            img = URLImage.createToStorage(placeHolder,user.getUsername(),url);
             String url = user.getImage();
-            img = URLImage.createToStorage(placeHolder,user.getUsername(),url);
-        }else
-            img = theme.getImage(user.getUsername());
+            img = URLImage.createToStorage(placeholder,user.getUsername(),url);
+
+        }else {
+            try {
+                img = Image.createImage(FileSystemStorage.getInstance().getAppHomePath() + user.getUsername());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         imageViewer = new ImageViewer(img);
         imageViewer.setPreferredSize(new Dimension(1400,800));
@@ -169,6 +179,13 @@ public class EditUser extends Form {
 
 
         ct.addAll(nom,prenom,email);
+
+
+//        if(user.getImage().contains("google"))
+//            add(imageViewer);
+//        else
+//            add(background);
+
         this.addAll(imageViewer,ct);
     }
 
