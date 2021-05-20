@@ -19,9 +19,11 @@
 
 package com.esprit.PI_Sprint3_Mobile.Template;
 
+import com.codename1.components.ImageViewer;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.*;
 import com.codename1.ui.animations.CommonTransitions;
+import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -51,7 +53,10 @@ public class WalkthruForm extends Form {
         walkthruTabs.hideTabs();
         
         Image notes = res.getImage("notes.png");
-        Image duke = res.getImage("duke.png");
+        Image duke = res.getImage("logo.png");
+        ImageViewer imageViewer = new ImageViewer(duke);
+        imageViewer.setPreferredSize(new Dimension(800,500));
+
         
         Label notesPlaceholder = new Label("","ProfilePic");
         Label notesLabel = new Label(notes, "ProfilePic");
@@ -61,10 +66,8 @@ public class WalkthruForm extends Form {
         
         Container tab1 = BorderLayout.centerAbsolute(BoxLayout.encloseY(
                 notesPlaceholder,
-                new Label("Keep track of your tasks", "WalkthruWhite"),
-                new SpanLabel("Never miss an appointment, never forget about your " +
-                                            "daily team meeting and remember when your favorite " +
-                                            "team is playing.",  "WalkthruBody"),
+                new Label("Bienvenus à EspritGazine", "WalkthruWhite"),
+                new SpanLabel("Magazine Officielle d'Esprit",  "WalkthruBody"),
                 bottomSpace
         ));
         tab1.setUIID("WalkthruTab1");
@@ -72,13 +75,12 @@ public class WalkthruForm extends Form {
         walkthruTabs.addTab("", tab1);
         
         Label bottomSpaceTab2 = new Label();
-        
+
         Container tab2 = BorderLayout.centerAbsolute(BoxLayout.encloseY(
-                new Label(duke, "ProfilePic"),
-                new Label("Codename One", "WalkthruWhite"),
-                new SpanLabel("Write once run anywhere native mobile development " +
-                                            "Get Java working on all devices as it was always meant " +
-                                            "to be!",  "WalkthruBody"),
+                // new Label(duke, "ProfilePic"),
+                imageViewer,
+                new Label("Esprit Gazine", "WalkthruWhite"),
+                new SpanLabel("Clubs, Evènements, Articles, Forums, Questionnaires ... ",  "WalkthruBody"),
                 bottomSpaceTab2
         ));
         
@@ -109,7 +111,7 @@ public class WalkthruForm extends Form {
             }
         });
         
-        Button skip = new Button("SKIP TUTORIAL");
+        Button skip = new Button("Passer");
         skip.setUIID("SkipButton");
         skip.addActionListener(e -> new ProfileForm(res).show());
 //        skip.addActionListener(e -> new Home().show());
