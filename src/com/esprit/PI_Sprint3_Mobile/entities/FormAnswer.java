@@ -5,13 +5,14 @@
  */
 package com.esprit.PI_Sprint3_Mobile.entities;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
 public class FormAnswer {
 
     private Integer id;
-    private Date answerDate;
+    private LocalDateTime answerDate;
     private Form form;
     private User user;
     private Collection<QuestionAnswer> questionAnswerCollection;
@@ -23,7 +24,7 @@ public class FormAnswer {
         this.id = id;
     }
 
-    public FormAnswer(Integer id, Date answerDate) {
+    public FormAnswer(Integer id, LocalDateTime answerDate) {
         this.id = id;
         this.answerDate = answerDate;
     }
@@ -36,11 +37,11 @@ public class FormAnswer {
         this.id = id;
     }
 
-    public Date getAnswerDate() {
+    public LocalDateTime getAnswerDate() {
         return answerDate;
     }
 
-    public void setAnswerDate(Date answerDate) {
+    public void setAnswerDate(LocalDateTime answerDate) {
         this.answerDate = answerDate;
     }
 
