@@ -151,6 +151,10 @@ public class LoginForm extends Form {
         
         Button createNewAccount = new Button("CREATE NEW ACCOUNT");
         createNewAccount.setUIID("CreateNewAccountButton");
+
+        createNewAccount.addActionListener(evt ->{
+            new SignUpForm().show();
+        });
         
         // We remove the extra space for low resolution devices so things fit better
         Label spaceLabel;
@@ -170,8 +174,8 @@ public class LoginForm extends Form {
                 BorderLayout.center(password).
                         add(BorderLayout.WEST, passwordIcon),
                 loginButton,
-                googleButton
-//                createNewAccount
+                googleButton,
+                createNewAccount
         );
         add(BorderLayout.CENTER, by);
         

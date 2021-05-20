@@ -110,7 +110,7 @@
         <val key="LoginForm.bgType" value="33" />
         <val key="LoginForm.margin" value="0.0,0.0,0.0,0.0" />
         <val key="LoginForm.padUnit" value="2,2,2,2" />
-        <val key="LoginForm.padding" value="0.0,0.0,5.0,5.0" />
+        <val key="LoginForm.padding" value="0.0,0.0,7.0,7.0" />
         <val key="LoginForm.transparency" value="255" />
         <val key="MenuButton.fgColor" value="ffffff" />
         <font key="MenuButton.font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="4.5" />
