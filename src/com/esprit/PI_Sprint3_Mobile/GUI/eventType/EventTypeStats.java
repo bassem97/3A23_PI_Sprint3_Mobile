@@ -9,13 +9,11 @@ import com.codename1.charts.views.PieChart;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.layouts.BorderLayout;
-import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.entities.EventType;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
 import com.esprit.PI_Sprint3_Mobile.services.EventTypeService;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -90,7 +88,7 @@ public class EventTypeStats {
         ChartComponent c = new ChartComponent(chart);
 
         // Create a form and show it.
-        Form f = new Form("Type Events Statistique", new BorderLayout());
+        Form f = new Form("Nombre D'Events/Type", new BorderLayout());
         f.add(BorderLayout.CENTER, c);
         f.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "", 5), evt1 -> new EventTypeListForm().show());
         return f;

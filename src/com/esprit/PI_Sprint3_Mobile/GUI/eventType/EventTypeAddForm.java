@@ -5,6 +5,7 @@ import com.codename1.ui.*;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.EventType;
 import com.esprit.PI_Sprint3_Mobile.services.EventTypeService;
@@ -31,7 +32,10 @@ public class EventTypeAddForm extends Form {
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Home", null, evt1 -> new Home().show());
-        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> new LoginForm(theme).show());
+        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
+            UserSession.logOut();
+            new LoginForm(theme).show();
+        });
 
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "", 5), evt1 -> new EventTypeListForm().show());
 

@@ -40,7 +40,10 @@ public class EventShowForm extends Form {
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
-        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme).show());
+        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
+            UserSession.logOut();
+            new LoginForm(theme).show();
+        });
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_DELETE, "", 5), actionEvent -> {
             if(Dialog.show("Confirmation", "Supprimer " + event.getName() + " ?", "Oui", "Non" )) {
                 EventService.getInstance().delete(event.getId());
@@ -101,6 +104,7 @@ public class EventShowForm extends Form {
                         .create();
 
                 System.out.println(message.getSid());
+                new EventListForm().show();
             }
             else if (ParticipantService.getInstance().findAll().stream().anyMatch(participant -> (participant.getEvent().getId() == event.getId()) && (participant.getUser().getId() == UserSession.getUser().getId())))
                 Dialog.show("Inormation", "Vous participez déjà à cet event", "OK", null);
