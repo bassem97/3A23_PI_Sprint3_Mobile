@@ -29,6 +29,7 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.event.EventListForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.theme.ThemeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 
 /**
@@ -110,8 +111,8 @@ public class ProfileForm extends SideMenuBaseForm {
             else if (text.contains("Questionnaires"))
                 System.out.println("dahmeni");
             else
-                //new ThemeListForm().show();
-                System.out.println("eya");
+                new ThemeListForm().show();
+
 
         });
         add(FlowLayout.encloseIn(finishLandingPage));
