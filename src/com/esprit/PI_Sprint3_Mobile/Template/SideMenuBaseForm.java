@@ -19,6 +19,7 @@
 
 package com.esprit.PI_Sprint3_Mobile.Template;
 
+import com.codename1.io.FileSystemStorage;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.Layout;
@@ -27,6 +28,8 @@ import com.esprit.PI_Sprint3_Mobile.GUI.event.EventListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.theme.ThemeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
+
+import java.io.IOException;
 
 /**
  * Common code that can setup the side menu
@@ -52,11 +55,19 @@ public abstract class SideMenuBaseForm extends Form {
     
     public void setupSideMenu(Resources res) {
         EncodedImage placeHolder = EncodedImage.createFromImage(res.getImage("person.png"), false);
-        Image profilePic;
+        Image profilePic = null;
         if (UserSession.getUser().getImage().equals("") || UserSession.getUser().getImage() == null )
             profilePic = res.getImage("person.png");
-        else
-            profilePic = URLImage.createToStorage(placeHolder,UserSession.getUser().getUsername(),UserSession.getUser().getImage());
+        else if(UserSession.getUser().getImage().contains("google"))
+            profilePic = URLImage.createToStorage(placeHolder,UserSession.getUser().getImage(),UserSession.getUser().getImage());
+        else {
+            try {
+                profilePic = Image.createImage(FileSystemStorage.getInstance().getAppHomePath() + UserSession.getUser().getImage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         Image mask = res.getImage("round-mask.png");
         mask = mask.scaledHeight(mask.getHeight() / 4 * 3);
         profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
