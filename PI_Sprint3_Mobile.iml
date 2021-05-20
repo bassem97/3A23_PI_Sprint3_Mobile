@@ -22,5 +22,6 @@
     <orderEntry type="library" name="jackson-annotations-2.12.3" level="project" />
     <orderEntry type="library" name="CodeNameOne" level="project" />
     <orderEntry type="library" name="jackson-core-2.12.3" level="project" />
+    <orderEntry type="library" name="commons-logging-1.2" level="project" />
   </component>
 </module>
