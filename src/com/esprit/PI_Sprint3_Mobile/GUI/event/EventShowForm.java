@@ -1,7 +1,6 @@
 package com.esprit.PI_Sprint3_Mobile.GUI.event;
 
 import com.codename1.charts.util.ColorUtil;
-import com.codename1.components.ImageViewer;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
@@ -39,10 +38,10 @@ public class EventShowForm extends Form {
     }
 
     private void addGUIs() {
-        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
+        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme).show());
-        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_DELETE, "TitleCommand", 5), actionEvent -> {
+        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_DELETE, "", 5), actionEvent -> {
             if(Dialog.show("Confirmation", "Supprimer " + event.getName() + " ?", "Oui", "Non" )) {
                 EventService.getInstance().delete(event.getId());
                 new EventListForm().show();
@@ -50,7 +49,7 @@ public class EventShowForm extends Form {
         });
 
 
-        this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5), evt1 -> new EventListForm().show());
+        this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "", 5), evt1 -> new EventListForm().show());
 
         lbDate = new Label(event.getDate().toLocalDate().toString());
         lbName = new Label(event.getName());

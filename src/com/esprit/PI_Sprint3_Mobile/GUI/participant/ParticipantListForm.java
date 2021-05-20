@@ -6,16 +6,11 @@ import com.codename1.ui.*;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
-import com.esprit.PI_Sprint3_Mobile.GUI.event.EventAddForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.event.EventListForm;
-import com.esprit.PI_Sprint3_Mobile.GUI.event.EventShowForm;
-import com.esprit.PI_Sprint3_Mobile.GUI.eventType.EventTypeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
-import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.entities.Participant;
-import com.esprit.PI_Sprint3_Mobile.services.EventService;
 import com.esprit.PI_Sprint3_Mobile.services.ParticipantService;
 
 import java.io.IOException;
@@ -36,11 +31,11 @@ public class ParticipantListForm extends Form {
     }
 
     private void addGUIs() {
-        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
+        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
 
-        this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5), evt1 -> new EventListForm().show());
+        this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "", 5), evt1 -> new EventListForm().show());
 
 
         ParticipantService.getInstance().findAll().stream().filter(participant -> participant.getUser().getId() == UserSession.getUser().getId())
@@ -49,8 +44,8 @@ public class ParticipantListForm extends Form {
     }
 
     private Container item(Participant participant){
-        ImageViewer imageViewer = new ImageViewer(theme.getImage("Cracks.jpg"));
-        imageViewer.setPreferredSize(new Dimension(300,300));
+        EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(300, 300, 0xffff0000), true);
+        URLImage background = URLImage.createToStorage(placeholder, participant.getEvent().getImage(), "");
         Container global = new Container(BoxLayout.x());
         Label lbName = new Label(participant.getEvent().getName());
         lbName.getAllStyles().setFgColor(ColorUtil.rgb(228, 53, 83));
@@ -61,7 +56,8 @@ public class ParticipantListForm extends Form {
         if (!participant.getAvis().equals(""))
             lbAvis = new Label("Avis: " + participant.getAvis());
         Container labels = new Container(BoxLayout.y()).addAll(lbName, lbDescription, lbDate, lbAvis);
-        global.addAll(imageViewer, labels);
+        global.add(background);
+        global.add(labels);
 
         lbName.addPointerReleasedListener(evt -> new ParticipantShowForm(participant).show());
         global.setLeadComponent(lbName);
