@@ -41,7 +41,7 @@ public class EventTypeListForm extends Form {
                 this.removeAll();
                 eventTypes
                         .stream()
-                        .filter(ev -> ev.getName().contains(text))
+                        .filter(ev -> ev.getName().toLowerCase().contains(text.toLowerCase()))
                         .forEach(event1 -> this.add(item(event1)));
             }else{
                 this.removeAll();

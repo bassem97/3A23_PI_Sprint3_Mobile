@@ -13,6 +13,7 @@ import com.esprit.PI_Sprint3_Mobile.services.EventService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class EventListForm extends Form {
 
@@ -46,7 +47,7 @@ public class EventListForm extends Form {
                 this.removeAll();
                 events
                         .stream()
-                        .filter(ev -> ev.getName().contains(text) || ev.getDescription().contains(text))
+                        .filter(ev -> ev.getName().toLowerCase().contains(text.toLowerCase()) || ev.getDescription().toLowerCase().contains(text.toLowerCase()))
                         .forEach(event1 -> this.add(item(event1)));
             }else{
                 this.removeAll();
