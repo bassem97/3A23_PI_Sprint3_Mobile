@@ -43,23 +43,20 @@ public class EventListForm extends Form {
 
         ArrayList<Event> events = EventService.getInstance().findAll();
         events.forEach(event -> this.add(item(event)));
-        TextField tfSeach = new TextField("", "Search");
-        tfSeach.addPointerReleasedListener(event2 -> {
-            if(tfSeach.getText().length() > 0) {
-                ArrayList<Event> aux = new ArrayList<>(events);
+        this.getToolbar().addSearchCommand(e ->{
+            String text = (String)e.getSource();
+            if (text != null && text.length() != 0){
                 this.removeAll();
-                aux.stream().filter(event -> event.getName().contains(tfSeach.getText().toLowerCase())).forEach(event ->{
-                    System.out.println(tfSeach.getText());
-                    System.out.println(event);
-                    this.add(item(event));
-                });
-            } else {
+                events
+                        .stream()
+                        .filter(ev -> ev.getName().contains(text) || ev.getDescription().contains(text))
+                        .forEach(event1 -> this.add(item(event1)));
+            }else{
                 this.removeAll();
-                ArrayList<Event> aux = new ArrayList<>(events);
-                aux.forEach(event -> this.add(item(event)));
+                events.forEach(event2 -> this.add(item(event2)));
             }
+
         });
-        this.getToolbar().setTitleComponent(tfSeach);
     }
 
     private Container item(Event event){
