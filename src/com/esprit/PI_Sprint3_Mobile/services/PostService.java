@@ -3,6 +3,7 @@ package com.esprit.PI_Sprint3_Mobile.services;
 import com.codename1.io.*;
 import com.codename1.processing.Result;
 import com.codename1.ui.events.ActionListener;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.entities.Post;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
 
@@ -47,18 +48,10 @@ public class PostService {
     }
 
     public boolean save(Post post) {
-        String url = Statics.BASE_URL + "api/post/new";
+        String url = Statics.BASE_URL + "api/post/new/sujet/" + post.getSujet().getId() + "/user/" + UserSession.getUser().getId() + "/t?text=" + post.getText();
         req.setUrl(url);
-        req.setPost(true);
         req.setContentType("application/json");
         try {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("text", post.getText());
-            hashMap.put("image", post.getImage());
-            hashMap.put("sujet_id", post.getSujet());
-     /*       hashMap.put("user_id", post.getUser());*/
-            hashMap.put("rating", post.getRating());
-            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -74,20 +67,10 @@ public class PostService {
     }
 
     public boolean update(Post post) {
-        String url = Statics.BASE_URL + "api/post/" + post.getId() + "/update";
+        String url = Statics.BASE_URL + "api/post/" + post.getId() + "/update?text=" + post.getText();
         req.setUrl(url);
-        req.setHttpMethod("PUT");
         req.setContentType("application/json");
         try {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("id", post.getId());
-            hashMap.put("text", post.getText());
-            hashMap.put("date", post.getDateTime());
-            hashMap.put("image", post.getImage());
-            hashMap.put("sujet_id", post.getSujet());
-            hashMap.put("user_id", post.getUser());
-            hashMap.put("rating", post.getRating());
-            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -124,9 +107,6 @@ public class PostService {
     }
 
 
-
-
-
     public ArrayList<Post> parsePosts(String jsonText){
         try {
             posts=new ArrayList<>();
@@ -144,13 +124,17 @@ public class PostService {
                 p.setImage((obj.get("image").toString()));
                 float rating = Float.parseFloat(obj.get("rating").toString());
                 p.setRating((int)rating);
+                float sujetId = Float.parseFloat(obj.get("sujetId").toString());
+                p.setSujet(SujetService.getInstance().findById((int) sujetId));
+                float userId = Float.parseFloat(obj.get("userId").toString());
+                p.setUser(UserService.getInstance().findById((int) userId));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
                         .replace("T", " ")
                         .split("\\+")[0], formatter);
                 p.setDateTime(dateTime);
 
-               posts.add(p);
+                posts.add(p);
             }
 
         } catch (IOException ex) {
