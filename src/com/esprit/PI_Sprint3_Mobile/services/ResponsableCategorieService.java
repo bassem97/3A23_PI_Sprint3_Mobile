@@ -3,6 +3,7 @@ package com.esprit.PI_Sprint3_Mobile.services;
 import com.codename1.io.*;
 import com.codename1.processing.Result;
 import com.codename1.ui.events.ActionListener;
+import com.esprit.PI_Sprint3_Mobile.entities.Categorie;
 import com.esprit.PI_Sprint3_Mobile.entities.ResponsableCategorie;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
 
@@ -19,6 +20,7 @@ public class ResponsableCategorieService {
     private ConnectionRequest req;
     private boolean resultOK;
     ArrayList<ResponsableCategorie> responsableCategories;
+    ResponsableCategorie responsableCategorie;
 
     private ResponsableCategorieService() {
         req = new ConnectionRequest();
@@ -31,8 +33,8 @@ public class ResponsableCategorieService {
         return instance;
     }
 
-    public ArrayList<ResponsableCategorie> findAll(){
-        String url = Statics.BASE_URL + "api/responsableCategorie/list";
+    public ArrayList<ResponsableCategorie> findAll() {
+        String url = Statics.BASE_URL + "api/responsable/categorie";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -45,21 +47,27 @@ public class ResponsableCategorieService {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return responsableCategories;
     }
-
-    public boolean save(ResponsableCategorie responsableCategories) {
-        String url = Statics.BASE_URL + "api/categorie/new";
+    public ResponsableCategorie findById(int id){
+        String url = Statics.BASE_URL + "api/responsable/categorie/"+ id + "/find";
         req.setUrl(url);
-        req.setPost(true);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                responsableCategorie= parseEvents (new String(req.getResponseData())).get(0);
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return responsableCategorie;
+    }
+
+
+    public boolean save(ResponsableCategorie responsableCategorie) {
+        String url = Statics.BASE_URL + "api/responsable/categorie/" + responsableCategorie.getCategorie().getId() + "/new?Nom=" + responsableCategorie.getNom() + "&Prenom="+responsableCategorie.getPrenom()+ "&Email="+responsableCategorie.getEmail() ;
+        req.setUrl(url);
         req.setContentType("application/json");
         try {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("nom", String.valueOf(responsableCategories.getNom()));
-            hashMap.put("prenom", responsableCategories.getPrenom());
-            hashMap.put("email", responsableCategories.getEmail());
-            hashMap.put("categorie", responsableCategories.getCategorie());
-
-
-            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -75,20 +83,11 @@ public class ResponsableCategorieService {
     }
 
     public boolean update(ResponsableCategorie responsableCategorie) {
-        String url = Statics.BASE_URL + "api/categorie/" + responsableCategorie.getId() + "/update";
+        String url = Statics.BASE_URL + "api/responsable/categorie/" + responsableCategorie.getId() + "/update?Nom=" + responsableCategorie.getNom() + "&Prenom="+responsableCategorie.getPrenom()+ "&Email="+responsableCategorie.getEmail()  + "&Categorie="+responsableCategorie.getCategorie().getId() ;
         req.setUrl(url);
-        req.setHttpMethod("PUT");
         req.setContentType("application/json");
         try {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("id", responsableCategorie.getId());
-            hashMap.put("nom", responsableCategorie.getNom());
-            hashMap.put("prenom", responsableCategorie.getPrenom());
-            hashMap.put("email", responsableCategorie.getEmail());
-            hashMap.put("categorie", responsableCategorie.getCategorie());
 
-
-            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -104,7 +103,7 @@ public class ResponsableCategorieService {
     }
 
     public boolean delete(int id) {
-        String url = Statics.BASE_URL + "api/responsableCategorie/" + id + "/delete";
+        String url = Statics.BASE_URL + "api/responsable/categorie/" + responsableCategorie.getId() + "/delete";
         req.setUrl(url);
         req.setHttpMethod("DELETE");
         req.setContentType("application/json");
@@ -144,8 +143,8 @@ public class ResponsableCategorieService {
                 r.setNom((obj.get("nom").toString()));
                 r.setPrenom(obj.get("prenom").toString());
                 r.setEmail(obj.get("email").toString());
-                r.setCategorie(obj.get("categorie").toString());
-
+                float cat_id = Float.parseFloat(obj.get("categorie_id").toString());
+                r.setCategorie(CategorieService.getInstance().findAll().stream().filter(cat -> cat.getId() == cat_id ).findAny().orElse(null)) ;
                 responsableCategories.add(r);
             }
 

@@ -18,6 +18,7 @@ public class CategorieService {
     private ConnectionRequest req;
     private boolean resultOK;
     ArrayList<Categorie> categories;
+    Categorie categorie;
 
     private CategorieService() {
         req = new ConnectionRequest();
@@ -31,7 +32,7 @@ public class CategorieService {
     }
 
     public ArrayList<Categorie> findAll(){
-        String url = Statics.BASE_URL + "api/categorie/list";
+        String url = Statics.BASE_URL + "api/categorie";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -44,6 +45,22 @@ public class CategorieService {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return categories;
     }
+
+    public Categorie findById(int id){
+        String url = Statics.BASE_URL + "api/categorie/"+ categorie.getId() + "/find";
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                categorie = parseEvents(new String(req.getResponseData())).get(0);
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return categorie;
+    }
+
 
     public boolean save(Categorie categorie) {
         String url = Statics.BASE_URL + "api/categorie/new";
@@ -70,16 +87,10 @@ public class CategorieService {
     }
 
     public boolean update(Categorie categorie) {
-        String url = Statics.BASE_URL + "api/categorie/" + categorie.getId() + "/update";
+        String url = Statics.BASE_URL + "api/categorie/" + categorie.getId() + "/update?Titre=" + categorie.getTitre() + "&Description=" + categorie.getDescription();
         req.setUrl(url);
-        req.setHttpMethod("PUT");
         req.setContentType("application/json");
         try {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("id", categorie.getId());
-            hashMap.put("titre", categorie.getTitre());
-            hashMap.put("description", categorie.getDescription());
-            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -117,8 +128,6 @@ public class CategorieService {
 
 
 
-
-
     public ArrayList<Categorie> parseEvents(String jsonText){
         try {
             categories =new ArrayList<>();
@@ -138,10 +147,13 @@ public class CategorieService {
                 categories.add(c);
             }
 
+            return categories;
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            return null;
 
         }
 
-        return categories;
+
     }
 }

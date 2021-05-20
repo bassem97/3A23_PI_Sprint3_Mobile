@@ -10,7 +10,7 @@ import com.esprit.PI_Sprint3_Mobile.entities.User;
 import java.util.List;
 
 
-public final class UserSession {
+public final class  UserSession {
     private static UserSession instance;
 
     private static User user;

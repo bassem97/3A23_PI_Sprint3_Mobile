@@ -5,6 +5,8 @@
  */
 package com.esprit.PI_Sprint3_Mobile.entities;
 
+import com.codename1.ui.layouts.BoxLayout;
+
 import java.util.Collection;
 import java.util.Date;
 
@@ -41,6 +43,9 @@ public class Form {
         this.creationDate = creationDate;
         this.updateDate = updateDate;
         this.openDate = openDate;
+    }
+
+    public Form(String nom, BoxLayout yCenter) {
     }
 
     public Integer getId() {

@@ -1,5 +1,7 @@
 package com.esprit.PI_Sprint3_Mobile.entities;
 
+import java.util.Objects;
+
 public class Categorie {
     private int id ;
     private String titre ;
@@ -42,5 +44,13 @@ public class Categorie {
     @Override
     public String toString() {
         return titre;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Categorie categorie = (Categorie) o;
+        return id == categorie.id;
     }
 }
