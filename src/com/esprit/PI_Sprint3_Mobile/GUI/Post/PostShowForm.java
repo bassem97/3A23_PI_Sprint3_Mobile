@@ -4,6 +4,7 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Post;
@@ -32,7 +33,10 @@ public class PostShowForm extends Form {
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Home", null, evt1 -> new ProfileForm(res).show());
-        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> new LoginForm(res).show());
+        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
+            UserSession.logOut();
+            new LoginForm(res).show();
+        });
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_DELETE, "", 5), actionEvent -> {
             if(Dialog.show("Confirmation", "Supprimer " + post.getText() + " ?", "Oui", "Non" )) {
                 PostService.getInstance().delete(post.getId());

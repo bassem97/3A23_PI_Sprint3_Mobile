@@ -40,8 +40,10 @@ private Theme theme;
     private void addGUIs(Theme themee) {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(res).show());
-        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(res).show());
-
+        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
+            UserSession.logOut();
+            new LoginForm(res).show();
+        });
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "", 5), evt1 -> new SujetAddForm(themee).show());
 
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "", 5), evt1 -> new ThemeListForm().show());
@@ -88,7 +90,7 @@ private Theme theme;
 
         if (sujet.getUser().getId() == UserSession.getUser().getId()) {
             lbText.addPointerPressedListener(evt -> {
-                if (Dialog.show("Information", "Afficher Sujet / Posts", "Afficher Sujet", "Afficher Posts"))
+                if (Dialog.show("Information", "Modifier Sujet / Afficher Posts", "Modifier Sujet", "Afficher Posts"))
                     new SujetShowForm(sujet).show();
                 else
                     new PostListForm(sujet).show();

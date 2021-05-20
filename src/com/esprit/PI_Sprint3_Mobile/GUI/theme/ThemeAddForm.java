@@ -7,7 +7,8 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.Validator;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
+import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Theme;
 import com.esprit.PI_Sprint3_Mobile.services.ThemeService;
@@ -31,11 +32,14 @@ public class ThemeAddForm extends Form {
         addActions();
     }
 
+
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(res).show());
-        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
-        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_UNDO, "", 5), evt1 -> new ThemeListForm().show());
+        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
+            UserSession.logOut();
+            new LoginForm(res).show();
+        });        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_UNDO, "", 5), evt1 -> new ThemeListForm().show());
 
         tfLibelle = new TextField();
         tfLibelle.getAllStyles().setFgColor(ColorUtil.BLACK);
