@@ -42,7 +42,7 @@ public class UserListForm extends Form {
         FontImage Home = FontImage.createMaterial(FontImage.MATERIAL_HOME_FILLED, "TitleCommand", 5);
         this.getToolbar().addCommandToLeftBar(null,Home,evt1 -> new ProfileForm(theme).show());
 
-        this.getToolbar().addCommandToRightBar(null,icon,evt1 -> new LoginForm(theme).show());
+        this.getToolbar().addCommandToRightBar(null,icon,evt1 -> new LoginForm(theme, null, null).show());
 
         users.forEach(user ->this.add(item(user.getImage(),user.getUsername(),user.getEmail(),user)));
 

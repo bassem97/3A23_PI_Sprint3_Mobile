@@ -84,7 +84,7 @@ public abstract class SideMenuBaseForm extends Form {
         getToolbar().addMaterialCommandToSideMenu("  Forum", FontImage.MATERIAL_FORUM,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e ->{
             UserSession.logOut();
-            new LoginForm(res).show();
+            new LoginForm(res, null, null).show();
         });
     }
     

@@ -57,7 +57,8 @@ public class MyApplication {
 //            e.printStackTrace();
 //        }
 //        new LoginForm(theme).show();
-        new LoginForm(theme).show();
+        new LoginForm(theme,null,null).show();
+//        new ContinueRegistrationForm("bassem.jadoui@esprit.tn").show();
 //        new EditUser(UserService.getInstance().findAll().stream().filter(user -> user.getEmail().toLowerCase().contains("eya")).findAny().orElse(null)).show();
     }
 

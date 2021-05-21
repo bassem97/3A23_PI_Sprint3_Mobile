@@ -31,7 +31,7 @@ public class EventTypeAddForm extends Form {
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
         this.getToolbar().addCommandToOverflowMenu("Home", null, evt1 -> new Home().show());
-        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> new LoginForm(theme).show());
+        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> new LoginForm(theme, null, null).show());
 
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5), evt1 -> new EventTypeListForm().show());
 
