@@ -11,6 +11,9 @@ import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.entities.Participant;
 import com.esprit.PI_Sprint3_Mobile.services.EventService;
 import com.esprit.PI_Sprint3_Mobile.services.ParticipantService;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 /*import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
@@ -92,7 +95,7 @@ public class EventShowForm extends Form {
                 String accountSID = "AC709e88cb1f31108712fcc78bb1bc772f";
                 String authToken = "ece948d681c8e57c763e8df95d7b8aaf";
                 String fromPhone = "+19384440612";
-                /*Twilio.init(accountSID, authToken);
+                Twilio.init(accountSID, authToken);
 
                 Message message = Message
                         .creator(new PhoneNumber("+21625882775"), // to
@@ -100,7 +103,7 @@ public class EventShowForm extends Form {
                                 "Vous participez à l'event " + event.getName() + " qui aura lieu le " + event.getDate().toLocalDate())
                         .create();
 
-                System.out.println(message.getSid());*/
+                System.out.println(message.getSid());
             }
             else if (ParticipantService.getInstance().findAll().stream().anyMatch(participant -> (participant.getEvent().getId() == event.getId()) && (participant.getUser().getId() == UserSession.getUser().getId())))
                 Dialog.show("Inormation", "Vous participez déjà à cet event", "OK", null);
