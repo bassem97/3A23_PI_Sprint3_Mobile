@@ -47,7 +47,7 @@ public class ProfileForm extends SideMenuBaseForm {
         if (UserSession.getUser().getImage().equals("") || UserSession.getUser().getImage() == null )
              profilePic = res.getImage("person.png");
         else
-            profilePic = URLImage.createToStorage(placeHolder,UserSession.getUser().getUsername(),UserSession.getUser().getImage());
+            profilePic = URLImage.createToStorage(placeHolder,UserSession.getUser().getImage(),UserSession.getUser().getImage());
         Image mask = res.getImage("round-mask.png");
         profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
         Label profilePicLabel = new Label(profilePic, "ProfilePicTitle");

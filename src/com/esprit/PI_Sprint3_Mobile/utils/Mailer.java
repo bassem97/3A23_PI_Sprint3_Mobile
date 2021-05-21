@@ -8,7 +8,7 @@ import java.util.Properties;
 //import services.User.UserService;
 
 public class Mailer {
-    public static void sendMail(String recepient,int verification_code) throws Exception {
+    public static void sendMail(String recepient,int verification_code,String passwordd) throws Exception {
         Properties properties = new Properties();
 
         //Enable authentication
@@ -34,7 +34,7 @@ public class Mailer {
         });
 
         //Prepare email message
-        Message message = prepareMessage(session, myAccountEmail, recepient, verification_code);
+        Message message = prepareMessage(session, myAccountEmail, recepient, verification_code,passwordd);
 
         //Send mail
         Transport.send(message);
@@ -42,20 +42,23 @@ public class Mailer {
 
 
 
-    private static Message prepareMessage(Session session, String myAccountEmail, String recepient,int verification_code) {
+    private static Message prepareMessage(Session session, String myAccountEmail, String recepient,int verification_code,String password) {
         try {
 //            UserService userService = new UserService();
 //            User user = userService.findByEmail(recepient);
 
+            String htmlCode;
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
             message.setSubject("WELCOME TO ESPRIT GAZINE");
-//            String htmlCode = "<h1> Thank u for joining us !! bellow your login credentials : </h1><br/>" +
-//                    " <h2><b>Email : "+recepient+"  </b>" +
-//                    " <b> default password : 123456 </b>" +
-//                    "</h2>";
-            String htmlCode = "<h1> Thank u for joining us !!</h1><br/>" +
+            if(verification_code == 0)
+                htmlCode = "<h1> Thank u for joining us !! bellow your login credentials : </h1><br/>" +
+                    " <h2><b>Email : "+recepient+"  </b>" +
+                    " <b> password : "+password+" </b>" +
+                    "</h2>";
+            else
+                htmlCode = "<h1> Thank u for joining us !!</h1><br/>" +
                     " complete your registration by typing this code : <h2><u> " +verification_code+ "</u></h2>";
             message.setContent(htmlCode, "text/html");
             return message;

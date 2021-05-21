@@ -39,7 +39,7 @@ public class ParticipantShowForm extends Form {
         this.getToolbar().addCommandToOverflowMenu("Home", null, evt1 -> new ProfileForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
             UserSession.logOut();
-            new LoginForm(theme).show();
+            new LoginForm(theme, null, null).show();
         });
 
         if (participant.getEvent().getDate().toLocalDate().isAfter(LocalDate.now())) {

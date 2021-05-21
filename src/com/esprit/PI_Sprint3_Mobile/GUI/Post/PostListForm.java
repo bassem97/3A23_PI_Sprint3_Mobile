@@ -42,7 +42,7 @@ public class PostListForm extends Form {
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(res).show());
         this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
             UserSession.logOut();
-            new LoginForm(res).show();
+            new LoginForm(res, null, null).show();
         });
 
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "", 5), evt1 -> new PostAddForm(sujet).show());

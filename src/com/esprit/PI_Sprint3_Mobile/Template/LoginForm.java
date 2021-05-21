@@ -49,7 +49,10 @@ import java.awt.*;
  * @author Shai Almog
  */
 public class LoginForm extends Form {
-    public LoginForm(Resources theme) {
+    TextField login;
+    TextField password;
+
+    public LoginForm(Resources theme, String email, String passwd) {
         super(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE));
         setUIID("LoginForm");
         Container welcome = FlowLayout.encloseCenter(
@@ -68,9 +71,16 @@ public class LoginForm extends Form {
 
         Label profilePicLabel = new Label(profilePic, "ProfilePic");
 //        profilePicLabel.setMask(mask.createMask());
-        
-        TextField login = new TextField("bassem.jadoui@esprit.tn", "Login", 20, TextField.EMAILADDR) ;
-        TextField password = new TextField("123456", "Password", 20, TextField.PASSWORD) ;
+
+        if (email == null){
+            login = new TextField("", "Login", 20, TextField.EMAILADDR) ;
+            password = new TextField("", "Password", 20, TextField.PASSWORD) ;
+        }else{
+            login = new TextField(email, "Login", 20, TextField.EMAILADDR) ;
+            password = new TextField(passwd, "Password", 20, TextField.PASSWORD) ;
+        }
+
+
         login.getAllStyles().setMargin(LEFT, 0);
         password.getAllStyles().setMargin(LEFT, 0);
         Label loginIcon = new Label("", "TextField");
