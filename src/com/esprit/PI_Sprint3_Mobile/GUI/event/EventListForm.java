@@ -30,33 +30,30 @@ public class EventListForm extends Form {
 
 
     private void addGUIs() {
-        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
+        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
         this.getToolbar().addCommandToOverflowMenu("Types Events",null,evt1 -> new EventTypeListForm().show());
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu("Mes Events",null,evt1 -> new ParticipantListForm().show());
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme, null, null).show());
 
-        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "TitleCommand", 5), evt1 -> new EventAddForm().show());
+        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "", 5), evt1 -> new EventAddForm().show());
 
         ArrayList<Event> events = EventService.getInstance().findAll();
         events.forEach(event -> this.add(item(event)));
-        TextField tfSeach = new TextField("", "Search");
-        tfSeach.addPointerReleasedListener(event2 -> {
-            if(tfSeach.getText().length() > 0) {
-                ArrayList<Event> aux = new ArrayList<>(events);
+        this.getToolbar().addSearchCommand(e ->{
+            String text = (String)e.getSource();
+            if (text != null && text.length() != 0){
                 this.removeAll();
-                aux.stream().filter(event -> event.getName().contains(tfSeach.getText().toLowerCase())).forEach(event ->{
-                    System.out.println(tfSeach.getText());
-                    System.out.println(event);
-                    this.add(item(event));
-                });
-            } else {
+                events
+                        .stream()
+                        .filter(th -> th.getName().contains(text))
+                        .forEach(th1 -> this.add(item(th1)));
+            }else{
                 this.removeAll();
-                ArrayList<Event> aux = new ArrayList<>(events);
-                aux.forEach(event -> this.add(item(event)));
+                events.forEach(th2 -> this.add(item(th2)));
             }
         });
-        this.getToolbar().setTitleComponent(tfSeach);
+
     }
 
     private Container item(Event event){

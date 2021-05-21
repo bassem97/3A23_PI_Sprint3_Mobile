@@ -28,6 +28,8 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.GUI.event.EventListForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.theme.ThemeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 
 /**
@@ -45,7 +47,7 @@ public class ProfileForm extends SideMenuBaseForm {
         if (UserSession.getUser().getImage().equals("") || UserSession.getUser().getImage() == null )
              profilePic = res.getImage("person.png");
         else
-            profilePic = URLImage.createToStorage(placeHolder,UserSession.getUser().getUsername(),UserSession.getUser().getImage());
+            profilePic = URLImage.createToStorage(placeHolder,UserSession.getUser().getImage(),UserSession.getUser().getImage());
         Image mask = res.getImage("round-mask.png");
         profilePic = profilePic.fill(mask.getWidth(), mask.getHeight());
         Label profilePicLabel = new Label(profilePic, "ProfilePicTitle");
@@ -58,12 +60,12 @@ public class ProfileForm extends SideMenuBaseForm {
         
         Container remainingTasks = BoxLayout.encloseY(
                         new Label("12", "CenterTitle"),
-                        new Label("remaining tasks", "CenterSubTitle")
+                        new Label("articles", "CenterSubTitle")
                 );
         remainingTasks.setUIID("RemainingTasks");
         Container completedTasks = BoxLayout.encloseY(
                         new Label("32", "CenterTitle"),
-                        new Label("completed tasks", "CenterSubTitle")
+                        new Label("commentaires", "CenterSubTitle")
         );
         completedTasks.setUIID("CompletedTasks");
 
@@ -87,20 +89,32 @@ public class ProfileForm extends SideMenuBaseForm {
         
         FontImage arrowDown = FontImage.createMaterial(FontImage.MATERIAL_KEYBOARD_ARROW_DOWN, "Label", 3);
         
-        addButtonBottom(arrowDown, "Finish landing page concept", 0xd997f1, true);
-        addButtonBottom(arrowDown, "Design app illustrations", 0x5ae29d, false);
-        addButtonBottom(arrowDown, "Javascript training ", 0x4dc2ff, false);
-        addButtonBottom(arrowDown, "Surprise Party for Matt", 0xffc06f, false);
+        addButtonBottom( "Ajouter Article", 0xd997f1, true);
+        addButtonBottom( "Consulter Evènements", 0x5ae29d, false);
+        addButtonBottom( "Questionnaires", 0x4dc2ff, false);
+        addButtonBottom( "Forum", 0xffc06f, false);
         setupSideMenu(res);
     }
     
-    private void addButtonBottom(Image arrowDown, String text, int color, boolean first) {
+    private void addButtonBottom(String text, int color, boolean first) {
         MultiButton finishLandingPage = new MultiButton(text);
-        finishLandingPage.setEmblem(arrowDown);
         finishLandingPage.setUIID("Container");
         finishLandingPage.setUIIDLine1("TodayEntry");
         finishLandingPage.setIcon(createCircleLine(color, finishLandingPage.getPreferredH(),  first));
         finishLandingPage.setIconUIID("Container");
+        finishLandingPage.addActionListener(evt -> {
+            if (text.contains("Article"))
+                //new ArticleAdd().show;
+                System.out.println("ss");
+            else if (text.contains("Consulter"))
+                new EventListForm().show();
+            else if (text.contains("Questionnaires"))
+                System.out.println("dahmeni ");
+            else
+                new ThemeListForm().show();
+
+
+        });
         add(FlowLayout.encloseIn(finishLandingPage));
     }
     

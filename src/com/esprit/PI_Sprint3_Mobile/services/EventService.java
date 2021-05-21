@@ -150,7 +150,8 @@ public class EventService {
                 t.setDescription(obj.get("description").toString());
                 t.setImage(obj.get("image").toString());
                 t.setNb_part_max((int)Float.parseFloat(obj.get("nbPartMax").toString()));
-                t.setEventType(EventTypeService.getInstance().parseEventTypes(new String(req.getResponseData())).get(0));
+                float eventTypeId = Float.parseFloat(obj.get("eventTypeId").toString());
+                t.setEventType(EventTypeService.getInstance().findById((int) eventTypeId));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
                         .replace("T", " ")

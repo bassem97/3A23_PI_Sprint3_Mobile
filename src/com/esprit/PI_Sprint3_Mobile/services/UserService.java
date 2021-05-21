@@ -45,6 +45,7 @@ public class UserService {
                 user.setUsername(obj.get("username").toString());
                 user.setEmail(obj.get("email").toString());
                 user.setPassword(obj.get("password").toString());
+                user.setRoles(obj.get("roles").toString());
                 if(obj.get("image") == null)
                     user.setImage(null);
                 else

@@ -3,6 +3,7 @@ package com.esprit.PI_Sprint3_Mobile.services;
 import com.codename1.io.*;
 import com.codename1.processing.Result;
 import com.codename1.ui.events.ActionListener;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.entities.Sujet;
 import com.esprit.PI_Sprint3_Mobile.entities.Theme;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
@@ -19,6 +20,7 @@ public class SujetService {  private static SujetService instance= null;
     private ConnectionRequest req;
     private boolean resultOK;
     ArrayList<Sujet> sujets;
+    Sujet sujet;
 
     private SujetService() {
         req = new ConnectionRequest();
@@ -46,17 +48,26 @@ public class SujetService {  private static SujetService instance= null;
         return sujets;
     }
 
-    public boolean save(Sujet sujet) {
-        String url = Statics.BASE_URL + "api/sujet/new";
+    public Sujet findById(int id){
+        String url = Statics.BASE_URL + "api/sujet/"+ id + "/find";
         req.setUrl(url);
-        req.setPost(true);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                sujet = parseSujets(new String(req.getResponseData())).get(0);
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return sujet;
+    }
+
+    public boolean save(Sujet sujet) {
+        String url = Statics.BASE_URL + "api/sujet/new/theme/" + sujet.getTheme().getId() + "/user/" + UserSession.getUser().getId() +"/t?text=" + sujet.getText();
+        req.setUrl(url);
         req.setContentType("application/json");
         try {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("text", sujet.getText());
-            hashMap.put("image", sujet.getImage());
-            hashMap.put("theme_id", sujet.getTheme());
-            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -72,19 +83,10 @@ public class SujetService {  private static SujetService instance= null;
     }
 
     public boolean update(Sujet sujet) {
-        String url = Statics.BASE_URL + "api/event/" + sujet.getId() + "/update";
+        String url = Statics.BASE_URL + "api/sujet/" + sujet.getId() + "/update?text=" + sujet.getText();
         req.setUrl(url);
-        req.setHttpMethod("PUT");
         req.setContentType("application/json");
         try {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("id", sujet.getId());
-            hashMap.put("text", sujet.getText());
-            hashMap.put("date", sujet.getDateTime());
-            hashMap.put("image", sujet.getImage());
-         /*   hashMap.put("theme_id", sujet.getTheme());*/
-          /*  hashMap.put("user_id", sujet.getUser());*/
-            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -139,7 +141,10 @@ public class SujetService {  private static SujetService instance= null;
                 s.setId((int)id);
                 s.setText((obj.get("text").toString()));
                 s.setImage((obj.get("image").toString()));
-                s.setTheme((Theme) obj.get("theme_id"));
+                float themeId = Float.parseFloat(obj.get("themeId").toString());
+                s.setTheme(ThemeService.getInstance().findById((int) themeId));
+                float userId = Float.parseFloat(obj.get("userId").toString());
+                s.setUser(UserService.getInstance().findById((int) userId));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
                         .replace("T", " ")
