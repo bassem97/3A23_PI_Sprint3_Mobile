@@ -31,7 +31,7 @@ public class ResponsableCategorieListForm extends Form {
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme, null, null).show());
 
-        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_PIE_CHART, "TitleCommand", 5), evt1 -> new Charts().createPieChartForm().show());
+        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_PIE_CHART, "TitleCommand", 5), evt1 -> new Charts());
 
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "TitleCommand", 5), evt1 -> new ResponsableCategorieAddForm().show());
 
