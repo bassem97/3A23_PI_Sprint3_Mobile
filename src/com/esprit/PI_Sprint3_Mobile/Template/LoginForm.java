@@ -73,11 +73,11 @@ public class LoginForm extends Form {
 //        profilePicLabel.setMask(mask.createMask());
 
         if (email != null){
-            login = new TextField("bassem.jadoui@esprit.tn", "Login", 20, TextField.EMAILADDR) ;
-            password = new TextField("123456", "Password", 20, TextField.PASSWORD) ;
-        }else{
             login = new TextField(email, "Login", 20, TextField.EMAILADDR) ;
             password = new TextField(passwd, "Password", 20, TextField.PASSWORD) ;
+        }else{
+            login = new TextField(null, "Login", 20, TextField.EMAILADDR) ;
+            password = new TextField(null, "Password", 20, TextField.PASSWORD) ;
         }
 
 
