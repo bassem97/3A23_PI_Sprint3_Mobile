@@ -1,65 +1,71 @@
 package com.esprit.PI_Sprint3_Mobile.services;
 
-import com.codename1.components.ToastBar;
 import com.codename1.io.*;
 import com.codename1.processing.Result;
-import com.codename1.ui.FontImage;
 import com.codename1.ui.events.ActionListener;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
-import com.esprit.PI_Sprint3_Mobile.entities.Post;
+import com.esprit.PI_Sprint3_Mobile.entities.Commentaire;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PostService {
-    private static PostService instance= null;
+public class CommentaireService {
+
+    private static CommentaireService instance= null;
     private ConnectionRequest req;
     private boolean resultOK;
-    ArrayList<Post> posts;
+    ArrayList<Commentaire> commentaires;
 
-    private PostService() {
+
+    public CommentaireService() {
+
         req = new ConnectionRequest();
     }
 
-    public static PostService getInstance() {
+    public static CommentaireService getInstance() {
         if (instance == null) {
-            instance = new PostService();
+            instance = new CommentaireService();
         }
         return instance;
     }
 
-    public ArrayList<Post> findAll(){
-        String url = Statics.BASE_URL + "api/post";
+    public ArrayList<Commentaire> findAll(){
+        String url = Statics.BASE_URL + "api/commentaire/list";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                posts = parsePosts(new String(req.getResponseData()));
+                commentaires = parseCommentaires(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return posts;
+        return commentaires;
     }
 
-    public boolean save(Post post) {
-        String url = Statics.BASE_URL + "api/post/new/sujet/" + post.getSujet().getId() + "/user/" + UserSession.getUser().getId() + "/t?text=" + post.getText();
+    public boolean save(Commentaire commentaire) {
+        String url = Statics.BASE_URL + "api/commentaire/new/article"+commentaire.getArticle().getId();
         req.setUrl(url);
+        req.setPost(true);
         req.setContentType("application/json");
-        try {
+        try{
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("ref", commentaire.getRef());
+            hashMap.put("corps",commentaire.getCorps());
+            //hashMap.put("date", commentaire.getDate());
+            //hashMap.put("rating", commentaire.getRating());
+            //hashMap.put("article",commentaire.getArticle());
+
+            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
-                    ToastBar.showMessage("Post ajouté avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -69,17 +75,25 @@ public class PostService {
         }
     }
 
-    public boolean update(Post post) {
-        String url = Statics.BASE_URL + "api/post/" + post.getId() + "/update?text=" + post.getText();
+    public boolean update(Commentaire commentaire) {
+        String url = Statics.BASE_URL + "api/commentaire/" + commentaire.getRef() + "/update";
         req.setUrl(url);
+        req.setHttpMethod("PUT");
         req.setContentType("application/json");
         try {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("ref", commentaire.getRef());
+            hashMap.put("corps", commentaire.getCorps());
+            //hashMap.put("date", commentaire.getDate());
+            //hashMap.put("rating", commentaire.getRating());
+            //hashMap.put("article",commentaire.getArticle().getId());
+
+            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
-                    ToastBar.showMessage("Post modifié avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -89,8 +103,8 @@ public class PostService {
         }
     }
 
-    public boolean delete(int id) {
-        String url = Statics.BASE_URL + "api/post/" + id + "/delete";
+    public boolean delete(int ref) {
+        String url = Statics.BASE_URL + "api/commentaire/" + ref + "/delete";
         req.setUrl(url);
         req.setHttpMethod("DELETE");
         req.setContentType("application/json");
@@ -100,7 +114,6 @@ public class PostService {
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
-                    ToastBar.showMessage("Post supprimé avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -108,13 +121,11 @@ public class PostService {
         } catch (Exception e) {
             return false;
         }
-
     }
 
-
-    public ArrayList<Post> parsePosts(String jsonText){
+    public ArrayList<Commentaire> parseCommentaires(String jsonText){
         try {
-            posts=new ArrayList<>();
+            commentaires =new ArrayList<>();
             JSONParser j = new JSONParser();
             Map<String,Object> tasksListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
             List<Map<String,Object>> list = (List<Map<String,Object>>)tasksListJson.get("root");
@@ -122,31 +133,19 @@ public class PostService {
 
             for(Map<String,Object> obj : list){
 
-                Post p = new Post();
-                float id = Float.parseFloat(obj.get("id").toString());
-                p.setId((int)id);
-                p.setText((obj.get("text").toString()));
-                p.setImage((obj.get("image").toString()));
-                float rating = Float.parseFloat(obj.get("rating").toString());
-                p.setRating((int)rating);
-                float sujetId = Float.parseFloat(obj.get("sujetId").toString());
-                p.setSujet(SujetService.getInstance().findById((int) sujetId));
-                float userId = Float.parseFloat(obj.get("userId").toString());
-                p.setUser(UserService.getInstance().findById((int) userId));
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
-                        .replace("T", " ")
-                        .split("\\+")[0], formatter);
-                p.setDateTime(dateTime);
+                Commentaire c = new Commentaire();
+                float ref = Float.parseFloat(obj.get("ref").toString());
+                c.setRef((int)ref);
+                c.setCorps(obj.get("corps").toString());
 
-                posts.add(p);
+                commentaires.add(c);
             }
 
         } catch (IOException ex) {
 
         }
 
-        return posts;
+        return commentaires;
     }
-
 }
+

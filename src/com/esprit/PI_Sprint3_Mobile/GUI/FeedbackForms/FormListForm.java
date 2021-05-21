@@ -9,7 +9,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Border;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
+import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Form;
 import com.esprit.PI_Sprint3_Mobile.services.FormService;
 
@@ -33,7 +33,7 @@ public class FormListForm extends com.codename1.ui.Form {
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
         this.getToolbar().addCommandToOverflowMenu("Home", null, event -> new Home().show());
-        this.getToolbar().addCommandToOverflowMenu(null, icon, event -> new LoginForm().show());
+        this.getToolbar().addCommandToOverflowMenu(null, icon, event -> new LoginForm(theme, null, null).show());
 
         FormService.getInstance().findAll().forEach(form -> this.add(item(form)));
     }

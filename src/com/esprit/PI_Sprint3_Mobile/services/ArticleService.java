@@ -1,13 +1,10 @@
 package com.esprit.PI_Sprint3_Mobile.services;
 
-import com.codename1.components.ToastBar;
 import com.codename1.io.*;
 import com.codename1.processing.Result;
-import com.codename1.ui.FontImage;
 import com.codename1.ui.events.ActionListener;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
-import com.esprit.PI_Sprint3_Mobile.entities.Sujet;
-import com.esprit.PI_Sprint3_Mobile.entities.Theme;
+import com.esprit.PI_Sprint3_Mobile.entities.Article;
+import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
 
 import java.io.IOException;
@@ -18,64 +15,65 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SujetService {  private static SujetService instance= null;
+public class ArticleService {
+
+    private static ArticleService instance= null;
     private ConnectionRequest req;
     private boolean resultOK;
-    ArrayList<Sujet> sujets;
-    Sujet sujet;
+    ArrayList<Article> articles;
 
-    private SujetService() {
+
+    public ArticleService() {
+
         req = new ConnectionRequest();
     }
 
-    public static SujetService getInstance() {
+    public static ArticleService getInstance() {
         if (instance == null) {
-            instance = new SujetService();
+            instance = new ArticleService();
         }
         return instance;
     }
 
-    public ArrayList<Sujet> findAll(){
-        String url = Statics.BASE_URL + "api/sujet";
+    public ArrayList<Article> findAll(){
+
+        String url = Statics.BASE_URL + "api/article/list";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                sujets = parseSujets(new String(req.getResponseData()));
+                articles = parseArticles(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return sujets;
+        return articles;
     }
 
-    public Sujet findById(int id){
-        String url = Statics.BASE_URL + "api/sujet/"+ id + "/find";
+    public boolean save(Article article) {
+        String url = Statics.BASE_URL + "api/article/new";
         req.setUrl(url);
-        req.setPost(false);
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                sujet = parseSujets(new String(req.getResponseData())).get(0);
-                req.removeResponseListener(this);
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return sujet;
-    }
-
-    public boolean save(Sujet sujet) {
-        String url = Statics.BASE_URL + "api/sujet/new/theme/" + sujet.getTheme().getId() + "/user/" + UserSession.getUser().getId() +"/t?text=" + sujet.getText();
-        req.setUrl(url);
+        req.setPost(true);
         req.setContentType("application/json");
-        try {
+
+        try{
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("id", article.getId());
+            hashMap.put("Titre", article.getTitre());
+            hashMap.put("corps", article.getCorps());
+            hashMap.put("date", article.getDate());
+            hashMap.put("image", article.getImage());
+            hashMap.put("likes", article.getLikes());
+            hashMap.put("vues", 0);
+            //hashMap.put("commentaire", article.getCommentaire());
+
+            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
-                    ToastBar.showMessage("Sujet ajouté avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -85,17 +83,28 @@ public class SujetService {  private static SujetService instance= null;
         }
     }
 
-    public boolean update(Sujet sujet) {
-        String url = Statics.BASE_URL + "api/sujet/" + sujet.getId() + "/update?text=" + sujet.getText();
+    public boolean update(Article article) {
+        String url = Statics.BASE_URL + "api/article/" + article.getId() + "/update";
         req.setUrl(url);
+        req.setHttpMethod("PUT");
         req.setContentType("application/json");
+
         try {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("id", article.getId());
+            hashMap.put("Titre", article.getTitre());
+            hashMap.put("corps", article.getCorps());
+            //hashMap.put("date", article.getDate());
+            //hashMap.put("image", article.getImage());
+            //hashMap.put("likes", article.getLikes());
+           // hashMap.put("vues", article.getVues());
+
+            req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
-                    ToastBar.showMessage("Sujet modifié avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -106,7 +115,7 @@ public class SujetService {  private static SujetService instance= null;
     }
 
     public boolean delete(int id) {
-        String url = Statics.BASE_URL + "api/sujet/" + id + "/delete";
+        String url = Statics.BASE_URL + "api/article/" + id + "/delete";
         req.setUrl(url);
         req.setHttpMethod("DELETE");
         req.setContentType("application/json");
@@ -116,7 +125,6 @@ public class SujetService {  private static SujetService instance= null;
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
-                    ToastBar.showMessage("Sujet supprimé avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -124,45 +132,38 @@ public class SujetService {  private static SujetService instance= null;
         } catch (Exception e) {
             return false;
         }
-
     }
 
+    public ArrayList<Article> parseArticles(String jsonText){
 
-
-
-
-    public ArrayList<Sujet> parseSujets(String jsonText){
         try {
-            sujets =new ArrayList<>();
+            articles=new ArrayList<>();
             JSONParser j = new JSONParser();
-            Map<String,Object> tasksListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
-            List<Map<String,Object>> list = (List<Map<String,Object>>)tasksListJson.get("root");
+
+            Map<String,Object> articlesListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            List<Map<String,Object>> list = (List<Map<String,Object>>)articlesListJson.get("root");
 
 
             for(Map<String,Object> obj : list){
 
-                Sujet s = new Sujet();
+                Article a = new Article();
                 float id = Float.parseFloat(obj.get("id").toString());
-                s.setId((int)id);
-                s.setText((obj.get("text").toString()));
-                s.setImage((obj.get("image").toString()));
-                float themeId = Float.parseFloat(obj.get("themeId").toString());
-                s.setTheme(ThemeService.getInstance().findById((int) themeId));
-                float userId = Float.parseFloat(obj.get("userId").toString());
-                s.setUser(UserService.getInstance().findById((int) userId));
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                //int id = Integer.parseInt(obj.get("id").toString());
+                a.setId((int) id);
+                a.setTitre((obj.get("titre").toString()));
+                a.setCorps(obj.get("corps").toString());
+                /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime dateTime = LocalDateTime.parse(obj.get("date").toString()
                         .replace("T", " ")
                         .split("\\+")[0], formatter);
-                s.setDateTime(dateTime);
-                sujets.add(s);
+                a.setDate(dateTime);*/
+                //a.setImage(obj.get("image").toString());
+                //a.setLikes((int)Float.parseFloat(obj.get("likes").toString()));
+
+                articles.add(a);
             }
+        } catch (IOException ex) { }
 
-        } catch (IOException ex) {
-
-        }
-
-        return sujets;
+        return articles;
     }
-
 }

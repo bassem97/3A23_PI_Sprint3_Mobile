@@ -2,6 +2,7 @@ package com.esprit.PI_Sprint3_Mobile.services;
 
 import com.codename1.io.*;
 import com.codename1.ui.events.ActionListener;
+import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.entities.Form;
 import com.esprit.PI_Sprint3_Mobile.entities.FormAnswer;
 import com.esprit.PI_Sprint3_Mobile.entities.QuestionAnswer;
@@ -36,8 +37,7 @@ public class FormService {
     }
 
     public Collection<Form> findAll() {
-        int userId = 1;
-        String url = this.formApiPath + "/" + userId;
+        String url = this.formApiPath + "/" + UserSession.getUser().getId();
         req.setUrl(url);
         req.setPost(false);
         req.setHttpMethod("GET");
@@ -53,8 +53,7 @@ public class FormService {
     }
 
     public Collection<FormAnswer> getAnswers(int formId) {
-        int userId = 1;
-        String url = this.formApiPath + "/" + userId + "/" + formId;
+        String url = this.formApiPath + "/" + UserSession.getUser().getId() + "/" + formId;
         req.setUrl(url);
         req.setPost(false);
         req.setHttpMethod("GET");
@@ -67,6 +66,38 @@ public class FormService {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return answers;
+    }
+
+    public boolean openForm(int formId) {
+        String url = this.formApiPath + "/" + UserSession.getUser().getId() + "/" + formId + "/open";
+        req.setUrl(url);
+        req.setHttpMethod("POST");
+        final int[] statusCode = new int[1];
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                statusCode[0] = evt.getResponseCode();
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return statusCode[0] == 200;
+    }
+
+    public boolean closeForm(int formId) {
+        String url = this.formApiPath + "/" + UserSession.getUser().getId() + "/" + formId + "/close";
+        req.setUrl(url);
+        req.setHttpMethod("POST");
+        final int[] statusCode = new int[1];
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                statusCode[0] = evt.getResponseCode();
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return statusCode[0] == 200;
     }
 
     public Collection<Form> parseForms(String jsonText) {
@@ -145,39 +176,5 @@ public class FormService {
             System.out.println(ex.getMessage());
             return null;
         }
-    }
-
-    public boolean openForm(int formId) {
-        int userId = 1;
-        String url = this.formApiPath + "/" + userId + "/" + formId + "/open";
-        req.setUrl(url);
-        req.setHttpMethod("POST");
-        final int[] statusCode = new int[1];
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                statusCode[0] = evt.getResponseCode();
-                req.removeResponseListener(this);
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return statusCode[0] == 200;
-    }
-
-    public boolean closeForm(int formId) {
-        int userId = 1;
-        String url = this.formApiPath + "/" + userId + "/" + formId + "/close";
-        req.setUrl(url);
-        req.setHttpMethod("POST");
-        final int[] statusCode = new int[1];
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                statusCode[0] = evt.getResponseCode();
-                req.removeResponseListener(this);
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return statusCode[0] == 200;
     }
 }
