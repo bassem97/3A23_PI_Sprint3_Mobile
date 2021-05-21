@@ -1,7 +1,9 @@
 package com.esprit.PI_Sprint3_Mobile.services;
 
+import com.codename1.components.ToastBar;
 import com.codename1.io.*;
 import com.codename1.processing.Result;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.entities.Post;
@@ -57,6 +59,7 @@ public class PostService {
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
+                    ToastBar.showMessage("Post ajouté avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -76,6 +79,7 @@ public class PostService {
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
+                    ToastBar.showMessage("Post modifié avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -96,6 +100,7 @@ public class PostService {
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
+                    ToastBar.showMessage("Post supprimé avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);

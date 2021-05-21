@@ -1,7 +1,9 @@
 package com.esprit.PI_Sprint3_Mobile.services;
 
+import com.codename1.components.ToastBar;
 import com.codename1.io.*;
 import com.codename1.processing.Result;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.PI_Sprint3_Mobile.entities.Theme;
 import com.esprit.PI_Sprint3_Mobile.utils.Statics;
@@ -70,6 +72,7 @@ public class ThemeService {
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
+                    ToastBar.showMessage("Theme ajouté avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -90,6 +93,7 @@ public class ThemeService {
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
+                    ToastBar.showMessage("Theme modifié avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -110,6 +114,7 @@ public class ThemeService {
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
+                    ToastBar.showMessage("Theme supprimé avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
