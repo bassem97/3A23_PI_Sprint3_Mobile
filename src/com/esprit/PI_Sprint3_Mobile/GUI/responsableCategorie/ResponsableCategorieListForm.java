@@ -6,6 +6,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
 import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
+import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.ResponsableCategorie;
 import com.esprit.PI_Sprint3_Mobile.services.ResponsableCategorieService;
 
@@ -28,7 +29,7 @@ public class ResponsableCategorieListForm extends Form {
 
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
-        this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
+        this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme, null, null).show());
 
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_PIE_CHART, "TitleCommand", 5), evt1 -> new Charts());

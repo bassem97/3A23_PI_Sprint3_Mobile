@@ -9,11 +9,13 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.list.DefaultListCellRenderer;
 import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.util.ImageIO;
+import com.codename1.ui.util.Resources;
 import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.NumericConstraint;
 import com.codename1.ui.validation.Validator;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
+import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
+import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Categorie;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.entities.EventType;
@@ -31,17 +33,23 @@ public class CategorieAddForm extends Form {
 
     private TextField tfTitre, tfDescription;
     private Button btnSave;
+    private Resources theme;
 
     public CategorieAddForm() {
         super("Ajouter Categorie", BoxLayout.y());
+        try {
+            theme = Resources.openLayered("/theme");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         addGUIs();
         addActions();
     }
 
     private void addGUIs() {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
-        this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
-        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
+        this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme).show());
+        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme, null, null).show());
 
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5), evt1 -> new CategorieListForm().show());
 
