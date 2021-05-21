@@ -42,7 +42,10 @@ public class Commentaire {
         this.article = article;
     }
 
-     
+    public Commentaire(Article article) {
+        this.article = article;
+    }
+
     public int getRef() {
         return ref;
     }
@@ -92,8 +95,5 @@ public class Commentaire {
     public void setArticle(Article article) {
         this.article = article;
     }
-
-
-       
 
 }
