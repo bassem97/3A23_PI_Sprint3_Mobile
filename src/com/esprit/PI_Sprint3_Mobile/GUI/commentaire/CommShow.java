@@ -20,6 +20,7 @@ public class CommShow extends Form {
     private Button btnUpdate;
     private Resources res;
 
+
     public CommShow(Commentaire post) {
         super(post.getCorps(), BoxLayout.yCenter());
         try {
