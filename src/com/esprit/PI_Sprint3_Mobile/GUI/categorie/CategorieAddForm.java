@@ -1,31 +1,15 @@
 package com.esprit.PI_Sprint3_Mobile.GUI.categorie;
 
 import com.codename1.components.ToastBar;
-import com.codename1.io.FileSystemStorage;
 import com.codename1.ui.*;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
-import com.codename1.ui.layouts.FlowLayout;
-import com.codename1.ui.list.DefaultListCellRenderer;
-import com.codename1.ui.spinner.Picker;
-import com.codename1.ui.util.ImageIO;
 import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.NumericConstraint;
 import com.codename1.ui.validation.Validator;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Categorie;
-import com.esprit.PI_Sprint3_Mobile.entities.Event;
-import com.esprit.PI_Sprint3_Mobile.entities.EventType;
 import com.esprit.PI_Sprint3_Mobile.services.CategorieService;
-import com.esprit.PI_Sprint3_Mobile.services.EventService;
-import com.esprit.PI_Sprint3_Mobile.services.EventTypeService;
-import com.esprit.PI_Sprint3_Mobile.utils.FileChooser.FileChooser;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.time.Instant;
-import java.time.ZoneId;
 
 public class CategorieAddForm extends Form {
 
@@ -42,6 +26,7 @@ public class CategorieAddForm extends Form {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
+
 
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5), evt1 -> new CategorieListForm().show());
 
