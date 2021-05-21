@@ -51,7 +51,7 @@ public class ArticleStats {
         // Generate the values
 
         ArrayList<Article> articles = ArticleService.getInstance().findAll();
-        ArrayList<Commentaire> comments = CommentaireService.getInstance().findAll();
+        //ArrayList<Commentaire> comments = CommentaireService.getInstance().findAll();
         HashMap<String, Integer> values = new HashMap<>();
         articles.forEach(article -> values.put(article.getTitre(),article.getLikes()));
 

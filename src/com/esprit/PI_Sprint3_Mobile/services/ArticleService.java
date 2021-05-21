@@ -52,7 +52,7 @@ public class ArticleService {
     }
 
     public boolean save(Article article) {
-        String url = Statics.BASE_URL + "api/article/new"+article.getTitre();
+        String url = Statics.BASE_URL + "api/article/new";
         req.setUrl(url);
         req.setPost(true);
         req.setContentType("application/json");

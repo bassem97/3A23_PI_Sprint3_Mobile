@@ -66,14 +66,14 @@ public class CommList extends Form {
         //String pattern = "yyyy-MM-dd HH:mm:ss";
         //SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         //Label lbDate = new Label(p.format(Date.valueOf(post.getDateTime().toLocalDate())));
-        Label lbDate = new Label(com.getDate().toLocalDate().toString());
-        Container labels = new Container(BoxLayout.y()).addAll(lbText, lbDate);
+        //Label lbDate = new Label(com.getDate().toLocalDate().toString());
+        Container labels = new Container(BoxLayout.y()).addAll(lbText);
         global.addAll(labels);
 
-        if (com.getUser().getId() == UserSession.getUser().getId()) {
+        // if (com.getUser().getId() == UserSession.getUser().getId()) {
             lbText.addPointerPressedListener(evt -> new CommShow(com).show());
             global.setLeadComponent(lbText);
-        }
+
 
         return global;
     }

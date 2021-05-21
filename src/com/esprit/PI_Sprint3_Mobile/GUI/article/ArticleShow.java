@@ -11,6 +11,7 @@ import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
+import com.esprit.PI_Sprint3_Mobile.GUI.commentaire.CommList;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
@@ -116,8 +117,7 @@ public class ArticleShow extends Form {
                 ArrayList<Commentaire> p;
                 CommentaireService ser = new CommentaireService();
                 p= ser.findAll();
-                //Label separator4 = new Label("______________");
-                //int i=0;
+
                 for(int i = 0 ; i < p.size(); i++){
                     Commentaire commentaire=p.get(i);
 
@@ -125,7 +125,9 @@ public class ArticleShow extends Form {
 
                 }
             }
+
         });
+        Affichesuite.addPointerPressedListener(evt -> new CommList(article).show());
 
         this.addAll(
                 new Container(BoxLayout.xCenter()).add(tfName),

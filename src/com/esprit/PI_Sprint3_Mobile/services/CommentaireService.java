@@ -48,7 +48,7 @@ public class CommentaireService {
     }
 
     public boolean save(Commentaire commentaire) {
-        String url = Statics.BASE_URL + "api/commentaire/new/"+commentaire.getArticle().getId();
+        String url = Statics.BASE_URL + "api/commentaire/new/article"+commentaire.getArticle().getId();
         req.setUrl(url);
         req.setPost(true);
         req.setContentType("application/json");
@@ -56,7 +56,7 @@ public class CommentaireService {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("ref", commentaire.getRef());
             hashMap.put("corps",commentaire.getCorps());
-            hashMap.put("date", commentaire.getDate());
+            //hashMap.put("date", commentaire.getDate());
             //hashMap.put("rating", commentaire.getRating());
             //hashMap.put("article",commentaire.getArticle());
 
