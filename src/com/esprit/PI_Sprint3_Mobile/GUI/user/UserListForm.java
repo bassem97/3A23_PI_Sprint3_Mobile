@@ -2,6 +2,7 @@ package com.esprit.PI_Sprint3_Mobile.GUI.user;
 
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.components.ImageViewer;
+import com.codename1.io.FileSystemStorage;
 import com.codename1.ui.*;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BoxLayout;
@@ -70,17 +71,22 @@ public class UserListForm extends Form {
         EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffff0000), true);
         URLImage background = URLImage.createToStorage(placeholder, user.getImage(), "");
 
-        Image img;
+        Image img = null;
         ImageViewer imageViewer = null;
         if(image == null || image.equals(""))
             img = theme.getImage("person.png");
         else if(image.contains("google")){
             String url = image;
             img = URLImage.createToStorage(placeholder,username,url);
-            imageViewer = new ImageViewer(img);
-            imageViewer.setPreferredSize(new Dimension(400,400));
         }else
-            img = theme.getImage(username);
+            try {
+                img = Image.createImage(FileSystemStorage.getInstance().getAppHomePath() + user.getImage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        imageViewer = new ImageViewer(img);
+        imageViewer.setPreferredSize(new Dimension(400,400));
 
 
 
@@ -92,10 +98,10 @@ public class UserListForm extends Form {
         Image delete = FontImage.createMaterial(FontImage.MATERIAL_DELETE, "TitleCommand", 5).toImage();
         Container labels = new Container(BoxLayout.y()).addAll(lbUsername, lbEmail);
 //        System.out.println(theme.getImage("person.png").getImageName());
-        if(image.contains("google"))
+        //if(image.contains("google"))
             global.add(imageViewer);
-        else
-            global.add(background);
+        //else
+        //    global.add(background);
         global.addAll(labels);
 
         lbUsername.addPointerReleasedListener(evt -> {

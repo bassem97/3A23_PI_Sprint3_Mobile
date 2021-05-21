@@ -33,7 +33,7 @@ public class ParticipantListForm extends Form {
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
             UserSession.logOut();
-            new LoginForm(theme).show();
+            new LoginForm(theme, null, null).show();
         });
 
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "", 5), evt1 -> new EventListForm().show());
