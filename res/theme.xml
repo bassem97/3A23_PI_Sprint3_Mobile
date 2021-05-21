@@ -8,6 +8,10 @@
     <image name="gradient-overlay.png"  />
     <image name="login-background.jpg"  />
     <image name="logo.png"  />
+    <image name="Appels.png"  />
+    <image name="Back.jpg"  />
+    <image name="background.jpg"  />
+    <image name="progress.png" type="multi"  />
     <image name="notes.png" type="multi"  />
     <image name="person.png"  />
     <image name="round-mask.png" type="multi"  />
@@ -307,6 +311,8 @@
         <val key="sel#transparency" value="0" />
         <val key="transparency" value="0" />
     </theme>
+    <image name="walthru-radio-selected.png" type="multi"  />
+    <image name="walthru-radio-unselected.png" type="multi"  />
     <image name="unselected-walkthru.png" type="multi"  />
     <image name="user-picture.jpg"  />
 </resource>

@@ -23,9 +23,15 @@ import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.GUI.article.ArticleListForm;
+//import com.esprit.PI_Sprint3_Mobile.GUI.article.SlideBar;
+import com.esprit.PI_Sprint3_Mobile.GUI.article.SlideBar2;
+import com.esprit.PI_Sprint3_Mobile.GUI.article.SplashForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.commentaire.CommList;
 import com.esprit.PI_Sprint3_Mobile.GUI.event.EventListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
+import com.esprit.PI_Sprint3_Mobile.entities.Article;
 
 /**
  * Common code that can setup the side menu
@@ -50,6 +56,7 @@ public abstract class SideMenuBaseForm extends Form {
     }
     
     public void setupSideMenu(Resources res) {
+        Article article = null;
         EncodedImage placeHolder = EncodedImage.createFromImage(res.getImage("person.png"), false);
         Image profilePic;
         if (UserSession.getUser().getImage().equals("") || UserSession.getUser().getImage() == null )
@@ -64,12 +71,15 @@ public abstract class SideMenuBaseForm extends Form {
 
         Container sidemenuTop = BorderLayout.center(profilePicLabel);
         sidemenuTop.setUIID("SidemenuTop");
-        
+
         getToolbar().addComponentToSideMenu(sidemenuTop);
         getToolbar().addMaterialCommandToSideMenu("  Home", FontImage.MATERIAL_DASHBOARD,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Users", FontImage.MATERIAL_VERIFIED_USER,  e -> new UserListForm().show());
 //        getToolbar().addMaterialCommandToSideMenu("  Activity", FontImage.MATERIAL_TRENDING_UP,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Events", FontImage.MATERIAL_EMOJI_EVENTS,  e -> new EventListForm().show());
+        //getToolbar().addMaterialCommandToSideMenu("  Articles", FontImage.MATERIAL_EMOJI_EVENTS,  e -> new ArticleListForm().show());
+        //getToolbar().addMaterialCommandToSideMenu("  Comments", FontImage.MATERIAL_EMOJI_EVENTS, e -> new CommList().show());
+        getToolbar().addMaterialCommandToSideMenu("  Articles", FontImage.MATERIAL_EMOJI_SYMBOLS,  e -> new SlideBar2(res).show());
         getToolbar().addMaterialCommandToSideMenu("  Forum", FontImage.MATERIAL_FORUM,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e ->{
             UserSession.logOut();
