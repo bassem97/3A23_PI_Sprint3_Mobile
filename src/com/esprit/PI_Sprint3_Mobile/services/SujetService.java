@@ -1,7 +1,9 @@
 package com.esprit.PI_Sprint3_Mobile.services;
 
+import com.codename1.components.ToastBar;
 import com.codename1.io.*;
 import com.codename1.processing.Result;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.entities.Sujet;
@@ -73,6 +75,7 @@ public class SujetService {  private static SujetService instance= null;
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
+                    ToastBar.showMessage("Sujet ajouté avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -92,6 +95,7 @@ public class SujetService {  private static SujetService instance= null;
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
+                    ToastBar.showMessage("Sujet modifié avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
@@ -112,6 +116,7 @@ public class SujetService {  private static SujetService instance= null;
                 public void actionPerformed(NetworkEvent evt) {
                     resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                     req.removeResponseListener(this);
+                    ToastBar.showMessage("Sujet supprimé avec succès", FontImage.MATERIAL_INFO);
                 }
             });
             NetworkManager.getInstance().addToQueueAndWait(req);
