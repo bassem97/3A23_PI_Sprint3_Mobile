@@ -7,7 +7,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Border;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.LoginForm;
+import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Form;
 import com.esprit.PI_Sprint3_Mobile.entities.FormAnswer;
 import com.esprit.PI_Sprint3_Mobile.entities.QuestionAnswer;
@@ -43,7 +43,7 @@ public class FormAnswersForm extends com.codename1.ui.Form {
         FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
         this.getToolbar().addCommandToOverflowMenu("Forms", null, event -> new FormListForm().show());
         this.getToolbar().addCommandToOverflowMenu("Home", null, event -> new Home().show());
-        this.getToolbar().addCommandToOverflowMenu(null, icon, event -> new LoginForm().show());
+        this.getToolbar().addCommandToOverflowMenu(null, icon, event -> new LoginForm(theme, null, null).show());
 
 
         Label lbTitle = new Label(form.getTitle());
