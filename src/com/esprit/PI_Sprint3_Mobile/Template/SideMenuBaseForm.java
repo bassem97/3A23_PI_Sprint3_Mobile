@@ -26,11 +26,17 @@ import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.FeedbackForms.FormListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.categorie.CategorieListForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.article.ArticleListForm;
+//import com.esprit.PI_Sprint3_Mobile.GUI.article.SlideBar;
+import com.esprit.PI_Sprint3_Mobile.GUI.article.SlideBar2;
+import com.esprit.PI_Sprint3_Mobile.GUI.article.SplashForm;
+import com.esprit.PI_Sprint3_Mobile.GUI.commentaire.CommList;
 import com.esprit.PI_Sprint3_Mobile.GUI.event.EventListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.responsableCategorie.ResponsableCategorieListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.theme.ThemeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
+import com.esprit.PI_Sprint3_Mobile.entities.Article;
 
 import java.io.IOException;
 
@@ -57,6 +63,7 @@ public abstract class SideMenuBaseForm extends Form {
     }
     
     public void setupSideMenu(Resources res) {
+        Article article = null;
         EncodedImage placeHolder = EncodedImage.createFromImage(res.getImage("person.png"), false);
         Image profilePic = null;
         if (UserSession.getUser().getImage().equals("") || UserSession.getUser().getImage() == null )
@@ -79,7 +86,7 @@ public abstract class SideMenuBaseForm extends Form {
 
         Container sidemenuTop = BorderLayout.center(profilePicLabel);
         sidemenuTop.setUIID("SidemenuTop");
-        
+
         getToolbar().addComponentToSideMenu(sidemenuTop);
         getToolbar().addMaterialCommandToSideMenu("  Home", FontImage.MATERIAL_DASHBOARD,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Users", FontImage.MATERIAL_VERIFIED_USER,  e -> new UserListForm().show());
@@ -89,6 +96,10 @@ public abstract class SideMenuBaseForm extends Form {
         getToolbar().addMaterialCommandToSideMenu("  Feedback", FontImage.MATERIAL_FEEDBACK,  e -> new FormListForm().show());
         getToolbar().addMaterialCommandToSideMenu("  Categories", FontImage.MATERIAL_CATEGORY,  e -> new CategorieListForm().show());
         getToolbar().addMaterialCommandToSideMenu("  Responsables", FontImage.MATERIAL_VERIFIED_USER,  e -> new ResponsableCategorieListForm().show());
+        //getToolbar().addMaterialCommandToSideMenu("  Articles", FontImage.MATERIAL_EMOJI_EVENTS,  e -> new ArticleListForm().show());
+        //getToolbar().addMaterialCommandToSideMenu("  Comments", FontImage.MATERIAL_EMOJI_EVENTS, e -> new CommList().show());
+        getToolbar().addMaterialCommandToSideMenu("  Articles", FontImage.MATERIAL_EMOJI_SYMBOLS,  e -> new SlideBar2(res).show());
+        getToolbar().addMaterialCommandToSideMenu("  Forum", FontImage.MATERIAL_FORUM,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e ->{
             UserSession.logOut();
             new LoginForm(res, null, null).show();
