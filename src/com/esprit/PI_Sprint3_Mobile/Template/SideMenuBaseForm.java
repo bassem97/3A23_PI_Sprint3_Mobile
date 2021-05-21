@@ -24,6 +24,7 @@ import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.util.Resources;
+import com.esprit.PI_Sprint3_Mobile.GUI.FeedbackForms.FormListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.event.EventListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.theme.ThemeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.user.UserListForm;
@@ -83,6 +84,7 @@ public abstract class SideMenuBaseForm extends Form {
 //        getToolbar().addMaterialCommandToSideMenu("  Activity", FontImage.MATERIAL_TRENDING_UP,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Events", FontImage.MATERIAL_EMOJI_EVENTS,  e -> new EventListForm().show());
         getToolbar().addMaterialCommandToSideMenu("  Forum", FontImage.MATERIAL_FORUM,  e -> new ThemeListForm().show());
+        getToolbar().addMaterialCommandToSideMenu("  Feedback", FontImage.MATERIAL_FEEDBACK,  e -> new FormListForm().show());
         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e ->{
             UserSession.logOut();
             new LoginForm(res, null, null).show();
