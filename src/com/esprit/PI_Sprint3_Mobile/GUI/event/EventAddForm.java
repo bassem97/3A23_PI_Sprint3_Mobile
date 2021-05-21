@@ -94,8 +94,8 @@ public class EventAddForm extends Form {
         val.addConstraint(tfName, new LengthConstraint(5));
         val.addConstraint(tfNbPartMax, new NumericConstraint(true));
 
-        CheckBox multiSelect = new CheckBox("Multi-select");
-        multiSelect.setSelected(false);
+//        CheckBox multiSelect = new CheckBox("Multi-select");
+//        multiSelect.setSelected(false);
 
         btnImg.addActionListener((ActionEvent e) -> {
             if (FileChooser.isAvailable()) {
@@ -181,8 +181,6 @@ public class EventAddForm extends Form {
 
             if (FileChooser.isAvailable()) {
                 FileChooser.showOpenDialog(".gif,image/gif,.png,image/png,.jpg,image/jpg,.tif,image/tif,.jpeg", callback);
-            } else {
-                Display.getInstance().openGallery(callback, Display.GALLERY_IMAGE);
             }
         });
     }
