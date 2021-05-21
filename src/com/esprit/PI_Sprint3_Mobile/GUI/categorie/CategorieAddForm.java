@@ -28,6 +28,8 @@ public class CategorieAddForm extends Form {
         this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm().show());
 
 
+
+
         this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5), evt1 -> new CategorieListForm().show());
 
         tfTitre = new TextField();
