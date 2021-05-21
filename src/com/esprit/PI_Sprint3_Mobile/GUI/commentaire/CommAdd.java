@@ -40,7 +40,7 @@ public class CommAdd extends Form {
         //this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(res).show());
         this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
             UserSession.logOut();
-            new LoginForm(res).show();
+            new LoginForm(res, null, null).show();
         });
 /*
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_UNDO, "TitleCommand", 5), evt1 -> new SujetListForm().show());

@@ -38,7 +38,7 @@ public class CommShow extends Form {
         //this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> new LoginForm(res).show());
         this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
             UserSession.logOut();
-            new LoginForm(res).show();
+            new LoginForm(res, null, null).show();
         });
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_DELETE, "", 5), actionEvent -> {
             if (Dialog.show("Confirmation", "Supprimer " + post.getCorps() + " ?", "Oui", "Non")) {

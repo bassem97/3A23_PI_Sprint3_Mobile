@@ -39,7 +39,7 @@ public class ArticleListForm extends Form {
         //this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
             UserSession.logOut();
-            new LoginForm(theme).show();
+            new LoginForm(theme, null, null).show();
         });
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_PIE_CHART, "", 5), evt1 -> new ArticleStats());
 

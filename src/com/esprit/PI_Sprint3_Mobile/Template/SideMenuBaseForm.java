@@ -99,7 +99,6 @@ public abstract class SideMenuBaseForm extends Form {
         //getToolbar().addMaterialCommandToSideMenu("  Articles", FontImage.MATERIAL_EMOJI_EVENTS,  e -> new ArticleListForm().show());
         //getToolbar().addMaterialCommandToSideMenu("  Comments", FontImage.MATERIAL_EMOJI_EVENTS, e -> new CommList().show());
         getToolbar().addMaterialCommandToSideMenu("  Articles", FontImage.MATERIAL_EMOJI_SYMBOLS,  e -> new SlideBar2(res).show());
-        getToolbar().addMaterialCommandToSideMenu("  Forum", FontImage.MATERIAL_FORUM,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e ->{
             UserSession.logOut();
             new LoginForm(res, null, null).show();

@@ -42,7 +42,7 @@ public class CommList extends Form {
         //this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> new LoginForm(res).show());
         this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
             UserSession.logOut();
-            new LoginForm(res).show();
+            new LoginForm(res, null, null).show();
         });
         this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "", 5), evt1 -> new CommAdd(article).show());
 
