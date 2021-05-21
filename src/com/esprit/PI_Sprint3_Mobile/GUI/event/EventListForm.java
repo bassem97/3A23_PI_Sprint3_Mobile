@@ -6,7 +6,6 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.esprit.PI_Sprint3_Mobile.GUI.eventType.EventTypeListForm;
 import com.esprit.PI_Sprint3_Mobile.GUI.participant.ParticipantListForm;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.Template.ProfileForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
@@ -14,7 +13,6 @@ import com.esprit.PI_Sprint3_Mobile.services.EventService;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 
 public class EventListForm extends Form {
 
@@ -32,35 +30,33 @@ public class EventListForm extends Form {
 
 
     private void addGUIs() {
-
-        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
+        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
         this.getToolbar().addCommandToOverflowMenu("Types Events",null,evt1 -> new EventTypeListForm().show());
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new ProfileForm(theme).show());
         this.getToolbar().addCommandToOverflowMenu("Mes Events",null,evt1 -> new ParticipantListForm().show());
-        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
-            UserSession.logOut();
-            new LoginForm(theme).show();
-        });
+        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme, null, null).show());
 
-        if (UserSession.getUser().getRoles().contains("ADMIN"))
-            this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "", 5), evt1 -> new EventAddForm().show());
+        this.getToolbar().addCommandToRightBar(null, FontImage.createMaterial(FontImage.MATERIAL_ADD, "TitleCommand", 5), evt1 -> new EventAddForm().show());
 
         ArrayList<Event> events = EventService.getInstance().findAll();
         events.forEach(event -> this.add(item(event)));
-        this.getToolbar().addSearchCommand(e ->{
-            String text = (String)e.getSource();
-            if (text != null && text.length() != 0){
+        TextField tfSeach = new TextField("", "Search");
+        tfSeach.addPointerReleasedListener(event2 -> {
+            if(tfSeach.getText().length() > 0) {
+                ArrayList<Event> aux = new ArrayList<>(events);
                 this.removeAll();
-                events
-                        .stream()
-                        .filter(ev -> ev.getName().toLowerCase().contains(text.toLowerCase()) || ev.getDescription().toLowerCase().contains(text.toLowerCase()))
-                        .forEach(event1 -> this.add(item(event1)));
-            }else{
+                aux.stream().filter(event -> event.getName().contains(tfSeach.getText().toLowerCase())).forEach(event ->{
+                    System.out.println(tfSeach.getText());
+                    System.out.println(event);
+                    this.add(item(event));
+                });
+            } else {
                 this.removeAll();
-                events.forEach(event2 -> this.add(item(event2)));
+                ArrayList<Event> aux = new ArrayList<>(events);
+                aux.forEach(event -> this.add(item(event)));
             }
-
         });
+        this.getToolbar().setTitleComponent(tfSeach);
     }
 
     private Container item(Event event){

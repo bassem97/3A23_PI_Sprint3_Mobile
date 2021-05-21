@@ -117,7 +117,7 @@ public class EditUser extends Form {
 
         }else {
             try {
-                img = Image.createImage(FileSystemStorage.getInstance().getAppHomePath() + user.getUsername());
+                img = Image.createImage(FileSystemStorage.getInstance().getAppHomePath() + user.getImage());
             } catch (IOException e) {
                 e.printStackTrace();
             }

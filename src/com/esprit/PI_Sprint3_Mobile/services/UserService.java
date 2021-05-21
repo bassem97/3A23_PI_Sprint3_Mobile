@@ -101,6 +101,8 @@ public class UserService {
             hashMap.put("email", user.getEmail());
             hashMap.put("username", user.getUsername());
             hashMap.put("password", user.getPassword());
+            hashMap.put("image", user.getImage());
+            hashMap.put("creation_date", user.getCreation_date());
             req.setRequestBody(Result.fromContent(hashMap).toString());
             req.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override

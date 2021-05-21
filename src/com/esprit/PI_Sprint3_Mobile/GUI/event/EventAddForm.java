@@ -16,7 +16,6 @@ import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.NumericConstraint;
 import com.codename1.ui.validation.Validator;
 import com.esprit.PI_Sprint3_Mobile.GUI.Home;
-import com.esprit.PI_Sprint3_Mobile.GUI.user.UserSession;
 import com.esprit.PI_Sprint3_Mobile.Template.LoginForm;
 import com.esprit.PI_Sprint3_Mobile.entities.Event;
 import com.esprit.PI_Sprint3_Mobile.entities.EventType;
@@ -52,14 +51,11 @@ public class EventAddForm extends Form {
     }
 
     private void addGUIs() {
-        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "", 5);
+        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_LOGOUT, "TitleCommand", 5);
         this.getToolbar().addCommandToOverflowMenu("Home",null,evt1 -> new Home().show());
-        this.getToolbar().addCommandToOverflowMenu(null, icon, evt1 -> {
-            UserSession.logOut();
-            new LoginForm(theme).show();
-        });
+        this.getToolbar().addCommandToOverflowMenu(null,icon,evt1 -> new LoginForm(theme, null, null).show());
 
-        this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "", 5), evt1 -> new EventListForm().show());
+        this.getToolbar().addCommandToLeftBar(null, FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, "TitleCommand", 5), evt1 -> new EventListForm().show());
 
         lbDate = new Label("Date");
         tfName = new TextField();
